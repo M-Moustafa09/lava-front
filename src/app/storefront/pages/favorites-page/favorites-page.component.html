@@ -1,0 +1,147 @@
+<app-store-layout [showFloatingChat]="false">
+  
+
+  <main class="lk-favorites-page">
+    @if (pageConfig().showTitle) {
+      <section class="lk-favorites-heading">
+        <div class="lk-favorites-heading__title">
+          <lucide-icon [img]="Heart" aria-hidden="true"></lucide-icon>
+          <div>
+            <h1>{{ pageConfig().headerTitle | localize: pageConfig().headerTitleAr : pageConfig().headerTitleEn }}</h1>
+            <p>{{ pageConfig().headerSubtitle | localize: pageConfig().headerSubtitleAr : pageConfig().headerSubtitleEn }}</p>
+          </div>
+        </div>
+
+        @if (pageConfig().showAddAllToCart) {
+          <button type="button" class="lk-favorites-add-all"
+            (click)="addAllFavoritesToCart()"
+            [disabled]="favoriteProducts().length === 0"
+          >
+            {{ pageConfig().addAllToCartText | localize: pageConfig().addAllToCartTextAr : pageConfig().addAllToCartTextEn }} <lucide-icon [img]="ShoppingCart" aria-hidden="true"></lucide-icon>
+          </button>
+        }
+      </section>
+    }
+
+    @if (pageConfig().showToolbar) {
+      <section class="lk-favorites-toolbar" aria-label='STOREFRONT.AUTO_STR_302'>
+        @if (pageConfig().showSort) {
+          <label>
+            <span>{{ 'COMMON.SORT' | translate }}:</span>
+            <span class="lk-favorites-select-wrap">
+              <select [ngModel]="sortMode()" (change)="updateSortMode($event)">
+                <option value="latest">{{ 'STOREFRONT.AUTO_STR_447' | translate }}</option>
+                <option value="price-low">{{ ('COMMON.PRICE' | translate) + ': ' + ('STOREFRONT.AUTO_STR_365' | translate) }}</option>
+                <option value="price-high">{{ ('COMMON.PRICE' | translate) + ': ' + ('STOREFRONT.AUTO_STR_329' | translate) }}</option>
+              </select>
+              <lucide-icon [img]="ChevronDown" aria-hidden="true"></lucide-icon>
+            </span>
+          </label>
+        }
+        @if (pageConfig().showCount) {
+          <p>
+            {{ 'STOREFRONT.AUTO_STR_334' | translate }}:
+            <strong>{{ favoriteProducts().length }}</strong>
+          </p>
+        }
+      </section>
+    }
+
+    @if (favoriteProducts().length > 0) {
+      <section class="lk-favorites-list" aria-label='STOREFRONT.AUTO_STR_210'>
+        @for (item of favoriteProducts(); track item.product.id) {
+          <article class="lk-favorite-item">
+            <a [routerLink]="['/product', item.product.id]" class="lk-favorite-item__image">
+              <img [src]="item.image" [alt]="item.nameAr" loading="lazy" decoding="async" />
+              <span aria-hidden="true"><lucide-icon [img]="Heart" fill="currentColor"></lucide-icon></span>
+            </a>
+
+            <div class="lk-favorite-item__details">
+              <a [routerLink]="['/product', item.product.id]">
+                <h2>{{ item.nameAr | localize: item.nameAr : item.nameEn }}</h2>
+              </a>
+              <p>
+                @if (pageConfig().showProductColor) {
+                  {{ 'PRODUCT.COLOR' | translate }}: {{ item.color | translate }} <i aria-hidden="true"></i>
+                }
+                @if (pageConfig().showProductSize) {
+                  {{ 'PRODUCT.SIZE' | translate }}: {{ item.size }}
+                }
+              </p>
+
+              @if (pageConfig().showProductPrice) {
+                <div class="lk-favorite-item__price">
+                  <strong>{{ item.price }}</strong><span>{{ 'COMMON.CURRENCY' | translate }}</span>
+                  @if (pageConfig().showProductOldPrice && item.oldPrice && item.oldPrice > item.price) {
+                    <del>{{ item.oldPrice }} {{ 'COMMON.CURRENCY' | translate }}</del>
+                  }
+                </div>
+              }
+
+              @if (pageConfig().showProductStock) {
+                <div [class]="item.product.stock > 0 ? 'lk-favorite-item__stock is-available' : 'lk-favorite-item__stock is-empty'">
+                  <span aria-hidden="true"></span>{{ (item.product.stock > 0 ? 'COMMON.INSTOCK' : 'STOREFRONT.AUTO_STR_366') | translate }}
+                </div>
+              }
+            </div>
+
+            <div class="lk-favorite-item__actions">
+              @if (pageConfig().showRemoveAction) {
+                <button type="button" class="lk-favorite-item__remove"
+                  (click)="removeFavorite(item.product.id); showToast('STOREFRONT.AUTO_STR_127', 'info')"
+                >{{ 'STOREFRONT.AUTO_STR_270' | translate }}<lucide-icon [img]="Trash2" aria-hidden="true"></lucide-icon>
+                </button>
+              }
+
+              @if (pageConfig().showMoveToCartAction) {
+                <button type="button" class="lk-favorite-item__move"
+                  (click)="addFavoriteToCart(item, true)"
+                  [disabled]="!(item.product.stock > 0)"
+                >{{ 'STOREFRONT.AUTO_STR_303' | translate }}<lucide-icon [img]="ShoppingCart" aria-hidden="true"></lucide-icon>
+                </button>
+              }
+            </div>
+          </article>
+        }
+      </section>
+    } @else {
+      <!-- Empty State -->
+      @if (pageConfig().showEmptyState !== false) {
+        <section class="lk-favorites-empty" aria-label='STOREFRONT.AUTO_STR_165'>
+          @if (pageConfig().showEmptyStateIllustration) {
+            <div class="lk-favorites-empty__illustration" aria-hidden="true">
+              <lucide-icon [img]="Heart"></lucide-icon>
+              <i class="is-one"></i>
+              <i class="is-two"></i>
+              <i class="is-three"></i>
+              <i class="is-four"></i>
+            </div>
+          }
+
+          <div class="lk-favorites-empty__copy">
+            <h2>{{ pageConfig().emptyStateTitle | localize: pageConfig().emptyStateTitleAr : pageConfig().emptyStateTitleEn }}</h2>
+            <p>{{ pageConfig().emptyStateSubtitle | localize: pageConfig().emptyStateSubtitleAr : pageConfig().emptyStateSubtitleEn }}</p>
+            <a routerLink="/all-shapers">
+              <span>{{ pageConfig().emptyStateButtonText | localize: pageConfig().emptyStateButtonTextAr : pageConfig().emptyStateButtonTextEn }}</span>
+              <lucide-icon [img]="ChevronRight" class="rtl-flip" aria-hidden="true"></lucide-icon>
+            </a>
+          </div>
+        </section>
+      }
+    }
+
+    @if (pageConfig().showTrustBadges) {
+      <section class="lk-favorites-trust" aria-label='DASHBOARD.AUTO_STR_238'>
+        @for (badge of pageConfig().trustBadges; track badge.id) {
+          <div>
+            @if (badge.icon === 'BadgeCheck') { <lucide-icon [img]="BadgeCheck" aria-hidden="true"></lucide-icon> }
+            @if (badge.icon === 'Truck') { <lucide-icon [img]="Truck" aria-hidden="true"></lucide-icon> }
+            @if (badge.icon === 'RotateCcw') { <lucide-icon [img]="RotateCcw" aria-hidden="true"></lucide-icon> }
+            @if (badge.icon === 'ShieldCheck') { <lucide-icon [img]="ShieldCheck" aria-hidden="true"></lucide-icon> }
+            <span><strong>{{ badge.title | localize: badge.titleAr : badge.titleEn }}</strong><small>{{ badge.subtitle | localize: badge.subtitleAr : badge.subtitleEn }}</small></span>
+          </div>
+        }
+      </section>
+    }
+  </main>
+</app-store-layout>

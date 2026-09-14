@@ -1,0 +1,4 @@
+LOCATION: size-guide\measure-waist (2).png
+STATUS: NON_COMPLIANT_ORIGINAL_EXCLUDED_PER_HARD_CONTENT_RULE
+REQUIRED_IMAGE_SPEC:
+Waist measurement diagram showing fully-clothed illustration or mannequin.

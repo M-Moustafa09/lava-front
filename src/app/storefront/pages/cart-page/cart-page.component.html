@@ -1,0 +1,191 @@
+<app-store-layout [showFloatingChat]="false">
+
+  <main class="lk-cart-page">
+    @if (config().showHeader !== false) {
+      <section class="lk-cart-heading">
+        <div>
+          <h1>{{ config().headerTitle | localize: config().headerTitleAr : config().headerTitleEn }}</h1>
+          <p>{{ itemCount() }} {{ (itemCount() === 1 ? 'STOREFRONT.AUTO_STR_471' : 'STOREFRONT.AUTO_STR_448') | translate }}</p>
+        </div>
+
+        @if (config().showContinueShopping) {
+          <a routerLink="/all-shapers" class="lk-cart-continue">
+            <span>{{ 'STOREFRONT.AUTO_STR_294' | translate }}</span>
+            <lucide-icon [img]="ChevronRight" class="rtl-flip" aria-hidden="true"></lucide-icon>
+          </a>
+        }
+      </section>
+    }
+
+    @if (config().showCartItems !== false && displayItems().length > 0) {
+      <section class="lk-cart-list" aria-label='STOREFRONT.AUTO_STR_208'>
+        @for (item of displayItems(); track item.cartItem.product.id + '-' + item.cartItem.size) {
+          <article class="lk-cart-item">
+            @if (config().showProductImage !== false) {
+              <a [routerLink]="['/product', item.cartItem.product.id]" class="lk-cart-item__image">
+                <img [src]="item.image" [alt]="item.nameAr" loading="lazy" decoding="async" />
+              </a>
+            }
+
+            <button
+              type="button"
+              [class.is-active]="item.favorite"
+              class="lk-cart-item__favorite"
+              (click)="toggleFavorite(item.cartItem.product.id, !!item.favorite)"
+              [attr.aria-label]="item.favorite ? 'STOREFRONT.AUTO_STR_270' : 'STOREFRONT.AUTO_STR_206'"
+            >
+              <lucide-icon name="heart" [attr.fill]="item.favorite ? 'currentColor' : 'none'" aria-hidden="true"></lucide-icon>
+            </button>
+
+            <div class="lk-cart-item__details">
+              <a [routerLink]="['/product', item.cartItem.product.id]">
+                <h2>{{ item.nameAr | localize: item.nameAr : item.nameEn }}</h2>
+              </a>
+
+              <div class="lk-cart-item__meta">
+                <p class="lk-cart-item__meta-row lk-cart-item__meta-row--color">
+                  <i class="lk-cart-color-dot" [class.is-beige]="item.color === 'STOREFRONT.AUTO_STR_483'" [class.is-black]="item.color !== 'STOREFRONT.AUTO_STR_483'" aria-hidden="true"></i>
+                  <span class="lk-cart-item__meta-label">{{ 'PRODUCT.COLOR' | translate }}:</span>
+                  <strong class="lk-cart-item__meta-value">{{ item.color | translate }}</strong>
+                </p>
+
+                <p class="lk-cart-item__meta-row">
+                  <span class="lk-cart-item__meta-label">{{ 'PRODUCT.SIZE' | translate }}:</span>
+                  <strong class="lk-cart-item__meta-value">{{ item.cartItem.size }}</strong>
+                </p>
+              </div>
+
+              <div class="lk-cart-item__price">
+                <span class="lk-cart-item__price-current">
+                  <strong>{{ item.price }}</strong>
+                  <span>{{ 'COMMON.CURRENCY' | translate }}</span>
+                </span>
+                @if (config().showOldPrice && item.oldPrice && item.oldPrice > item.price) {
+                  <del>{{ item.oldPrice }} {{ 'COMMON.CURRENCY' | translate }}</del>
+                }
+              </div>
+
+              @if (item.cartItem.quantity > 1) {
+                <small>{{ (item.price * item.cartItem.quantity) | number }} {{ 'COMMON.CURRENCY' | translate }}</small>
+              }
+            </div>
+
+            <div class="lk-cart-item__controls">
+              @if (config().showQuantityControls) {
+                <div class="lk-cart-quantity" aria-label='STOREFRONT.AUTO_STR_325'>
+                  <button
+                    type="button"
+                    (click)="updateQuantity(item.cartItem.product.id, item.cartItem.size, item.cartItem.quantity - 1)"
+                    aria-label='STOREFRONT.AUTO_STR_326'
+                  >
+                    −
+                  </button>
+                  <span>{{ item.cartItem.quantity }}</span>
+                  <button
+                    type="button"
+                    (click)="updateQuantity(item.cartItem.product.id, item.cartItem.size, item.cartItem.quantity + 1)"
+                    aria-label='STOREFRONT.AUTO_STR_327'
+                  >
+                    +
+                  </button>
+                </div>
+              }
+
+              @if (config().showRemoveButton) {
+                <button type="button" class="lk-cart-item__remove"
+                  (click)="removeFromCart(item.cartItem.product.id, item.cartItem.size)"
+                  aria-label='STOREFRONT.AUTO_STR_184'
+                >
+                  <lucide-icon name="trash-2" aria-hidden="true"></lucide-icon>
+                </button>
+              }
+            </div>
+          </article>
+        }
+      </section>
+
+      <section class="lk-cart-checkout-grid">
+        @if (config().showOrderSummary !== false) {
+          <div class="lk-cart-summary">
+            @if (config().showSubtotal) {
+              <div><span>{{ 'COMMON.SUBTOTAL' | translate }}</span><strong>{{ subtotal() | number }} {{ 'COMMON.CURRENCY' | translate }}</strong></div>
+            }
+            @if (config().showShipping) {
+              <div><span>{{ 'DASHBOARD.AUTO_STR_354' | translate }}</span><strong>{{ shipping() | number }} {{ 'COMMON.CURRENCY' | translate }}</strong></div>
+            }
+            @if (config().showDiscount) {
+              <div class="is-discount"><span>{{ 'COMMON.DISCOUNT' | translate }}</span><strong>-{{ discount() | number }} {{ 'COMMON.CURRENCY' | translate }}</strong></div>
+            }
+            @if (config().showTotal) {
+              <div class="lk-cart-summary__total">
+                <span>{{ 'CART.TOTAL' | translate }}</span>
+                <strong>{{ total() | number }} <small>{{ 'COMMON.CURRENCY' | translate }}</small></strong>
+              </div>
+            }
+            <p>{{ 'STOREFRONT.AUTO_STR_117' | translate }}</p>
+          </div>
+        }
+
+        @if (config().showCouponSection) {
+          <div class="lk-cart-coupon">
+            <h2><lucide-icon name="tag" aria-hidden="true"></lucide-icon> {{ config().couponTitle | localize: config().couponTitleAr : config().couponTitleEn }}</h2>
+            <div class="lk-cart-coupon__field">
+              <input
+                [value]="couponCode()"
+                (input)="setCouponCode($event)"
+                [placeholder]="config().couponPlaceholder | localize: config().couponPlaceholderAr : config().couponPlaceholderEn"
+                aria-label='CART.DISCOUNT_CODE'
+              />
+              <button type="button" (click)="applyCoupon()">{{ config().couponButtonText | localize: config().couponButtonTextAr : config().couponButtonTextEn }}</button>
+            </div>
+            <p><lucide-icon name="tag" aria-hidden="true"></lucide-icon>{{ 'STOREFRONT.AUTO_STR_58' | translate }}</p>
+          </div>
+        }
+      </section>
+    } @else if (config().showEmptyCartSection !== false) {
+      @if (config().emptyCartIllustration) {
+        <section class="lk-cart-empty" aria-label='CART.EMPTY'>
+          <div class="lk-cart-empty__illustration" aria-hidden="true">
+            <lucide-icon name="shopping-cart"></lucide-icon>
+            <i class="is-one"></i>
+            <i class="is-two"></i>
+            <i class="is-three"></i>
+            <i class="is-four"></i>
+          </div>
+
+          <div class="lk-cart-empty__copy">
+            <h2>{{ config().emptyCartText | localize: config().emptyCartTextAr : config().emptyCartTextEn }}</h2>
+            <p>{{ 'STOREFRONT.AUTO_STR_36' | translate }}</p>
+            <a routerLink="/all-shapers">
+              <span>{{ 'COMMON.START_SHOPPING' | translate }}</span>
+              <lucide-icon [img]="ChevronRight" class="rtl-flip" aria-hidden="true"></lucide-icon>
+            </a>
+          </div>
+        </section>
+      } @else {
+        <div class="py-20 text-center">{{ config().emptyCartText | localize: config().emptyCartTextAr : config().emptyCartTextEn }}</div>
+      }
+    }
+
+    @if (config().showTrustBadges) {
+      <section class="lk-cart-trust" aria-label='DASHBOARD.AUTO_STR_238'>
+        @for (badge of config().trustBadges; track badge.id) {
+          <div>
+            @if (badge.icon === 'BadgeCheck') { <lucide-icon name="badge-check" aria-hidden="true"></lucide-icon> }
+            @if (badge.icon === 'Truck') { <lucide-icon name="truck" aria-hidden="true"></lucide-icon> }
+            @if (badge.icon === 'RotateCcw') { <lucide-icon name="rotate-ccw" aria-hidden="true"></lucide-icon> }
+            @if (badge.icon === 'ShieldCheck') { <lucide-icon name="shield-check" aria-hidden="true"></lucide-icon> }
+            <span><strong>{{ badge.title | localize: badge.titleAr : badge.titleEn }}</strong><small>{{ badge.subtitle | localize: badge.subtitleAr : badge.subtitleEn }}</small></span>
+          </div>
+        }
+      </section>
+    }
+
+    @if (displayItems().length > 0) {
+      <button type="button" class="lk-cart-checkout-button" (click)="navigateToCheckout()">
+        <lucide-icon name="lock-keyhole" aria-hidden="true"></lucide-icon>
+        {{ config().checkoutButtonText | localize: config().checkoutButtonTextAr : config().checkoutButtonTextEn }}
+      </button>
+    }
+  </main>
+</app-store-layout>

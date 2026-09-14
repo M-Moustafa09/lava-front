@@ -1,0 +1,4 @@
+LOCATION: home\customer-3.png
+STATUS: NON_COMPLIANT_ORIGINAL_EXCLUDED_PER_HARD_CONTENT_RULE
+REQUIRED_IMAGE_SPEC:
+Customer review photo showing fully-clothed happy customer.

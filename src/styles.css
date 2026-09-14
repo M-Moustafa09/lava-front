@@ -1,0 +1,294 @@
+@import './assets/styles/dashboard/admin-catalog-page.css';
+@import './assets/styles/dashboard/dashboard-layout.css';
+@import './assets/styles/dashboard/dashboard-page.css';
+@import './assets/styles/dashboard/admin-floating-chat.css';
+@import './assets/styles/dashboard/admin-login-page.css';
+@import './assets/styles/dashboard/dashboard-login-page.css';
+@import './assets/styles/dashboard/dashboard-overdue-alerts.css';
+@import './assets/styles/dashboard/dashboard-overdue-alerts.top-left-compact.css';
+@import './assets/styles/dashboard/dashboard-sidebar-unified.css';
+@import './assets/styles/dashboard/about-page.css';
+@import './assets/styles/dashboard/all-shapers-page.css';
+@import './assets/styles/dashboard/cart-page.css';
+@import './assets/styles/dashboard/categories-page.css';
+@import './assets/styles/dashboard/checkout-page.css';
+@import './assets/styles/dashboard/contact-page.css';
+@import './assets/styles/dashboard/customer-floating-chat.css';
+@import './assets/styles/dashboard/faq-page.css';
+@import './assets/styles/dashboard/favorites-page.css';
+@import './assets/styles/dashboard/home-page.css';
+@import './assets/styles/dashboard/login-page.css';
+@import './assets/styles/dashboard/offers-page.css';
+@import './assets/styles/dashboard/order-tracking-page.css';
+@import './assets/styles/dashboard/policies-page.css';
+@import './assets/styles/dashboard/product-detail-page.css';
+@import './assets/styles/dashboard/profile-page.css';
+@import './assets/styles/dashboard/search-page.css';
+@import './assets/styles/dashboard/size-guide-page.css';
+@import './assets/styles/dashboard/staff-dashboard-menu-item.css';
+@import './assets/styles/dashboard/wallet-payment-page.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #FAFAFA;
+    --fg: #0C181B;
+    --card-bg: #FFFFFF;
+    --card-fg: #0C181B;
+    --primary-color: #2A5841;
+    --primary-fg: #FFFFFF;
+    --secondary-bg: #F4F7F5;
+    --secondary-fg: #2A5841;
+    --muted-bg: #F1F5F6;
+    --muted-fg: #5D7075;
+    --border-color: #DEE7E9;
+    --ring-color: #2A5841;
+    --success-color: #2A5841;
+    --warning-color: #F59E0B;
+    --danger-color: #F37561;
+    --accent-coral: #F37561;
+    --accent-blush: #F5BABA;
+    --accent-aqua: #89D2DA;
+    --accent-forest: #2A5841;
+  }
+
+  .dark {
+    --bg: #0A1114;
+    --fg: #EDF5F6;
+    --card-bg: #121B1F;
+    --card-fg: #EDF5F6;
+    --primary-color: #1A7A8C;
+    --primary-fg: #FFFFFF;
+    --secondary-bg: #18252A;
+    --secondary-fg: #89D2DA;
+    --muted-bg: #1C292E;
+    --muted-fg: #8A9FA4;
+    --border-color: #23343B;
+    --ring-color: #89D2DA;
+    --success-color: #4ADE80;
+    --warning-color: #FBBF24;
+    --danger-color: #F87171;
+    --accent-coral: #F37561;
+    --accent-blush: #F5BABA;
+    --accent-aqua: #89D2DA;
+    --accent-forest: #2A5841;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 100%;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'Montserrat', 'Cairo', 'Tajawal', sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', 'Cairo', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.brand-signature {
+  font-family: 'Mister Grape', cursive;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-fg);
+}
+
+.rtl-flip {
+  display: inline-flex;
+}
+
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .rtl-flip > svg,
+[dir="rtl"] lucide-icon.rtl-flip > svg {
+  transform: none !important;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.animate-slide-up { animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+.animate-fade-in { animation: fadeIn 0.2s ease-out; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--muted-bg) 25%, var(--border-color) 50%, var(--muted-bg) 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+.tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+app-root,
+app-store-header,
+app-home-header,
+app-bottom-nav,
+app-floating-chat,
+app-footer,
+app-section-card,
+app-badge {
+  display: block;
+}
+
+.lk-home-header__logo img,
+.lk-home-header__logo svg,
+.lk-home-header__logo-img,
+.lavva-brand-logo {
+  max-width: 165px !important;
+  max-height: 48px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  transition: transform 0.2s ease;
+}
+
+.lk-home-header__logo:hover img,
+.lk-home-header__logo:hover svg,
+.lavva-brand-logo:hover {
+  transform: scale(1.02);
+}
+
+/* Clean focus outline for interactive buttons and navigation links */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #2A5841;
+  outline-offset: 2px;
+}
+
+/* Global input focus normalization: eliminate double-border and outline-offset artifacts */
+input,
+select,
+textarea {
+  outline: none;
+}
+
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  outline: none !important;
+}
+
+/* Ensure all inputs and textareas inside containers/wrappers never render their own borders or outlines */
+.lk-search-form__field input,
+.lk-order-track-field input,
+.lk-cart-coupon__field input,
+.lk-checkout-field__input input,
+.lk-checkout-field__input select,
+.lk-checkout-field__textarea textarea,
+.lk-profile-field input,
+.lk-profile-field select,
+.lk-profile-field textarea,
+.lk-login-field input,
+.lk-contact-field input,
+.lk-contact-field textarea,
+.lk-wallet-form-field input,
+.lk-faq-search input,
+.customer-floating-chat__search-bar input,
+.customer-floating-chat__composer input,
+.admin-floating-chat__composer input,
+.admin-floating-chat__message-search input,
+.admin-login__input-wrapper input,
+.dashboard-login__field input,
+.dashboard-filter-control input,
+.dashboard-sidebar__search input,
+.lk-admin-catalog-field input,
+.dashboard-edit-order-wizard__field input,
+.dashboard-row-action-modal__field input,
+.dashboard-row-product-card__grid input {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Highlighting wrapper containers cleanly on focus-within with single border & subtle glow */
+.lk-search-form__field:focus-within {
+  border-color: #2A5841 !important;
+  box-shadow: 0 0 0 3px rgba(42, 88, 65, 0.15) !important;
+}
+
+.lk-order-track-field:focus-within {
+  border-color: #2A5841 !important;
+  box-shadow: 0 0 0 3px rgba(42, 88, 65, 0.15) !important;
+}
+
+.lk-cart-coupon__field:focus-within {
+  border-color: #2A5841 !important;
+  box-shadow: 0 0 0 3px rgba(42, 88, 65, 0.15) !important;
+}
+
+.lk-checkout-field__input:focus-within,
+.lk-checkout-field__textarea:focus-within {
+  border-color: #2A5841 !important;
+  box-shadow: 0 0 0 2px rgba(42, 88, 65, 0.15) !important;
+}
+
+.lk-profile-field > div:focus-within {
+  border-color: #2A5841 !important;
+  box-shadow: 0 0 0 3px rgba(42, 88, 65, 0.15) !important;
+}
+
+.lk-login-field:focus-within {
+  border-color: #2A5841 !important;
+  box-shadow: 0 0 0 3px rgba(42, 88, 65, 0.15) !important;
+}
+
+.lk-contact-field:focus-within {
+  border-color: #2A5841 !important;
+  box-shadow: 0 0 0 3px rgba(42, 88, 65, 0.15) !important;
+}
+
+.lk-faq-search:focus-within {
+  border-color: #2A5841 !important;
+  box-shadow: 0 0 0 3px rgba(42, 88, 65, 0.15) !important;
+}
+
+

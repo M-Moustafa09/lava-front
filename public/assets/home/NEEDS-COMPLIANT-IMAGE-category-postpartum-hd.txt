@@ -1,0 +1,4 @@
+LOCATION: home\category-postpartum-hd.png
+STATUS: NON_COMPLIANT_ORIGINAL_EXCLUDED_PER_HARD_CONTENT_RULE
+REQUIRED_IMAGE_SPEC:
+Postpartum shapewear category card showing fully-clothed model or product cutout.

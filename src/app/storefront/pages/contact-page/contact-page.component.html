@@ -1,0 +1,141 @@
+<app-store-layout [showBottomNav]="false" [showFloatingChat]="false">
+
+  <main class="lk-contact-page">
+      <img class="lk-contact-page__plant" [src]="contactPlant" alt="" aria-hidden="true" />
+
+      <div class="lk-contact-page__content">
+          <header class="lk-contact-page__hero">
+              <h1>{{ config.pageTitle | localize: config.pageTitleAr : config.pageTitleEn }}</h1>
+              <p>{{ config.pageSubtitle | localize: config.pageSubtitleAr : config.pageSubtitleEn }}</p>
+          </header>
+
+          <section class="lk-contact-methods" aria-label='STOREFRONT.AUTO_STR_300'>
+              @for (method of contactMethods; track method.id) {
+                <a
+                    [href]="method.link"
+                    class="lk-contact-method"
+                    [target]="method.external ? '_blank' : null"
+                    [rel]="method.external ? 'noreferrer' : null"
+                >
+                    <span class="lk-contact-method__arrow" aria-hidden="true">
+                        <lucide-icon class="rtl-flip" [name]="ChevronLeft"></lucide-icon>
+                    </span>
+
+                    <span class="lk-contact-method__details">
+                        <span class="lk-contact-method__icon" aria-hidden="true">
+                            <img [src]="method.icon" alt="" />
+                        </span>
+
+                        <span class="lk-contact-method__content">
+                            <strong>{{ method.title | localize: method.titleAr : method.titleEn }}</strong>
+                            <small [class.is-ltr]="method.ltr">{{ method.value | localize: method.valueAr : method.valueEn }}</small>
+                        </span>
+                    </span>
+                </a>
+              }
+          </section>
+
+          <section class="lk-contact-form-card" id="contact-form" aria-label='STOREFRONT.AUTO_STR_361' *ngIf="config.showContactForm">
+              <h2>{{ config.formTitle | localize: config.formTitleAr : config.formTitleEn }}</h2>
+              <p class="mb-4 text-center text-sm text-gray-500">{{ config.formSubtitle | localize: config.formSubtitleAr : config.formSubtitleEn }}</p>
+
+              <form class="lk-contact-form" (ngSubmit)="submitContactForm(contactForm)" #contactForm="ngForm">
+                  <label class="lk-contact-field">
+                      <lucide-icon [name]="User" aria-hidden="true"></lucide-icon>
+                      <input
+                          type="text"
+                          [(ngModel)]="form.name"
+                          name="name"
+                          [placeholder]="'DASHBOARD.AUTO_STR_427' | translate"
+                          [attr.aria-label]="'DASHBOARD.AUTO_STR_427' | translate"
+                      />
+                  </label>
+
+                  <label class="lk-contact-field">
+                      <lucide-icon [name]="Phone" aria-hidden="true"></lucide-icon>
+                      <input
+                          type="tel"
+                          [(ngModel)]="form.phone"
+                          name="phone"
+                          [placeholder]="'CHECKOUT.PHONE' | translate"
+                          [attr.aria-label]="'CHECKOUT.PHONE' | translate"
+                      />
+                  </label>
+
+                  <label class="lk-contact-field">
+                      <lucide-icon [name]="Mail" aria-hidden="true"></lucide-icon>
+                      <input
+                          type="email"
+                          [(ngModel)]="form.email"
+                          name="email"
+                          [placeholder]="'CONTACT.EMAIL' | translate"
+                          [attr.aria-label]="'CONTACT.EMAIL' | translate"
+                      />
+                  </label>
+
+                  <label class="lk-contact-field lk-contact-field--message">
+                      <lucide-icon [name]="PencilLine" aria-hidden="true"></lucide-icon>
+                      <textarea
+                          rows="4"
+                          [(ngModel)]="form.message"
+                          name="message"
+                          [placeholder]="'STOREFRONT.AUTO_STR_362' | translate"
+                          [attr.aria-label]="'STOREFRONT.AUTO_STR_362' | translate"
+                      ></textarea>
+                  </label>
+
+                  <button type="submit" class="lk-contact-submit">
+                      <lucide-icon [name]="Send" aria-hidden="true"></lucide-icon>
+                      <span>{{ 'SHARED.AUTO_STR_55' | translate }}</span>
+                  </button>
+              </form>
+          </section>
+
+          <section class="lk-contact-whatsapp-banner" aria-label='STOREFRONT.AUTO_STR_113'>
+              <img
+                  class="lk-contact-whatsapp-banner__bubble"
+                  [src]="contactChatBubble"
+                  alt=""
+                  aria-hidden="true"
+              />
+
+              <a
+                  class="lk-contact-whatsapp-banner__arrow"
+                  href="https://wa.me/966501234567"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label='STOREFRONT.AUTO_STR_395'
+              >
+                  <lucide-icon class="rtl-flip" [name]="ArrowLeft" aria-hidden="true"></lucide-icon>
+              </a>
+
+              <div class="lk-contact-whatsapp-banner__content">
+                  <h3>{{ 'STOREFRONT.AUTO_STR_103' | translate }}</h3>
+                  <p>{{ 'STOREFRONT.AUTO_STR_91' | translate }}</p>
+              </div>
+
+              <a
+                  class="lk-contact-whatsapp-banner__whatsapp"
+                  href="https://wa.me/966501234567"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label='STOREFRONT.AUTO_STR_395'
+              >
+                  <img [src]="contactWhatsappBanner" alt="" aria-hidden="true" />
+              </a>
+          </section>
+      </div>
+
+      <nav class="lk-contact-mobile-nav" aria-label='SHARED.AUTO_STR_52'>
+          @for (item of mobileNavigation; track item.to) {
+            <a 
+                [routerLink]="item.to" 
+                [class.is-active]="item.active || location.path() === item.to"
+            >
+                <lucide-icon [name]="item.icon" aria-hidden="true"></lucide-icon>
+                <span>{{ item.label | translate}}</span>
+            </a>
+          }
+      </nav>
+  </main>
+</app-store-layout>
