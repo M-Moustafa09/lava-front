@@ -54,8 +54,32 @@ export class AuthService {
     return null;
   }
 
+  // The CRM's «Lavva System» link signs the admin in on the API with the .Lavva.Session cookie, which
+  // is HttpOnly, so nothing here can see it — without this step the app finds no token and the guards
+  // send the admin to /admin/login. Trade the cookie for the same token a normal admin login issues.
+  // Only on the dashboard: a shopper on the storefront never holds this cookie.
+  private async adoptSsoSession(): Promise<string | null> {
+    if (!isPlatformBrowser(this.platformId)) return null;
+    if (!window.location.pathname.startsWith('/admin')) return null;
+
+    try {
+      const url = `${environment.apiBaseUrl || '/api'}/sso/session-token`;
+      const res = await firstValueFrom(this.http.get<any>(url, { withCredentials: true }));
+      const token = res?.token ?? res?.data?.token;
+
+      if (typeof token === 'string' && token.length > 0) {
+        window.localStorage.setItem('lk-auth-token', token);
+        return token;
+      }
+    } catch {
+      // No SSO session (401) or no longer an active admin (403): simply not signed in.
+    }
+
+    return null;
+  }
+
   async fetchUser(): Promise<User | null> {
-    const token = this.getToken();
+    const token = this.getToken() ?? await this.adoptSsoSession();
     if (!token) {
       this.setUser(null);
       return null;
