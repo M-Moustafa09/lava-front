@@ -2,6 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 const GUEST_ID_KEY = 'lk-guest-id';
+const AUTH_TOKEN_KEY = 'lk-auth-token';
 
 function getOrCreateGuestId(): string {
   if (typeof window === 'undefined' || !window.localStorage) {
@@ -23,7 +24,7 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   if (isApiRequest) {
     const token = typeof window !== 'undefined' && window.localStorage
-      ? localStorage.getItem(`${environment.storagePrefix}auth-token`)
+      ? localStorage.getItem(AUTH_TOKEN_KEY)
       : null;
     const guestId = getOrCreateGuestId();
 

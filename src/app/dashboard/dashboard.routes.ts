@@ -3,6 +3,10 @@ import { dashboardGuard } from '../core/guards/dashboard.guard';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./pages/admin-login-page/admin-login-page.component').then(m => m.AdminLoginPageComponent)
+  },
+  {
     path: '',
     redirectTo: 'store-customizer',
     pathMatch: 'full'
@@ -34,18 +38,18 @@ export const DASHBOARD_ROUTES: Routes = [
   },
   {
     path: 'products',
-    redirectTo: 'store-customizer',
-    pathMatch: 'full'
+    canActivate: [dashboardGuard],
+    loadComponent: () => import('./pages/products/products-page.component').then(m => m.ProductsPageComponent)
   },
   {
     path: 'categories',
-    redirectTo: 'store-customizer',
-    pathMatch: 'full'
+    canActivate: [dashboardGuard],
+    loadComponent: () => import('./pages/categories/categories-page.component').then(m => m.CategoriesPageComponent)
   },
   {
     path: 'offers',
-    redirectTo: 'store-customizer',
-    pathMatch: 'full'
+    canActivate: [dashboardGuard],
+    loadComponent: () => import('./pages/offers/offers-page.component').then(m => m.OffersPageComponent)
   },
   {
     path: '**',

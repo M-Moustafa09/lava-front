@@ -15,7 +15,9 @@ import {
   LogOut,
   Menu,
   Package,
+  Percent,
   Search,
+  Settings,
   Store,
   Tag,
   Trash2,
@@ -74,6 +76,7 @@ export class AdminLayoutComponent implements OnInit {
 
   pathname = '';
   
+  isSettingsMenuOpen = false;
   isSidebarOpen = false;
   sidebarView: SidebarView = 'menu';
   activeSubmenuKey: string | null = null;
@@ -193,6 +196,11 @@ export class AdminLayoutComponent implements OnInit {
     });
   }
 
+  openSettingsItem(path: string): void {
+    this.isSettingsMenuOpen = false;
+    this.router.navigateByUrl(path);
+  }
+
   isRouteActive(pathname: string, path: string): boolean {
     if (path === '/admin') return pathname === '/admin' || pathname === '/admin/';
     return pathname === path || pathname.startsWith(`${path}/`);
@@ -300,6 +308,8 @@ export class AdminLayoutComponent implements OnInit {
   readonly LogOutIcon = LogOut;
   readonly MenuIcon = Menu;
   readonly PackageIcon = Package;
+  readonly PercentIcon = Percent;
+  readonly SettingsIcon = Settings;
   readonly SearchIcon = Search;
   readonly StoreIcon = Store;
   readonly TagIcon = Tag;

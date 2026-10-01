@@ -1,3 +1,88 @@
 @import '../../../../../assets/styles/dashboard-page.css';
 @import '../../../../../assets/styles/dashboard-layout.css';
 @import '../../../../../assets/styles/dashboard-sidebar-unified.css';
+
+/* The header gear's menu. Kept here, not in the shared dashboard sheets: those exist in two
+   divergent copies and only this component uses the menu. */
+.lk-settings-menu {
+  position: relative;
+}
+
+/* The gear sits inside .lk-settings-menu, so the shared sheets' «header-actions > button» chip
+   rule never reaches it — it rendered as a bare, faint 15px glyph hugging the edge. Styled here
+   as a proper chip, and inset so it mirrors the menu button on the other side. */
+.dashboard-home__header-actions {
+  left: 20px;
+}
+
+.dashboard-home__settings-button {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #ccecf6;
+  border-radius: 999px;
+  background: #eaf8fc;
+  color: #178caf;
+  cursor: pointer;
+}
+
+.dashboard-home__settings-button:hover,
+.dashboard-home__settings-button[aria-expanded='true'] {
+  border-color: #8ed7eb;
+  background: #def4fb;
+}
+
+.dashboard-home__settings-button:focus-visible {
+  outline: 2px solid #8ed7eb;
+  outline-offset: 2px;
+}
+
+.lk-settings-menu__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: transparent;
+  border: 0;
+  cursor: default;
+}
+
+.lk-settings-menu__list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 41;
+  min-width: 180px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lk-settings-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.lk-settings-menu__item:hover {
+  background: #eff6ff;
+  color: #2563eb;
+}
