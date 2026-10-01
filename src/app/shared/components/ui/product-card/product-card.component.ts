@@ -33,7 +33,7 @@ export class ProductCardComponent {
   imgLoaded = signal(false);
 
   lang = this.langService.lang;
-  favorite = computed(() => this.favoritesService.favoriteProductIds().includes(this.product.id));
+  favorite = computed(() => this.favoritesService.isFavorite(this.product.id));
 
   get name() {
     return this.lang() === 'ar' ? this.product.nameAr : this.product.nameEn;

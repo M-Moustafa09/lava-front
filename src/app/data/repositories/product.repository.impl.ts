@@ -6,6 +6,27 @@ import { IProductRepository } from '../../domain/interfaces/product.repository';
 import { Product, Category, Review } from '../../domain/models/product.model';
 import { products, categories, reviews } from '../../shared/data/mockData';
 import { environment } from '../../../environments/environment';
+import { ContextService } from '../../core/services/context/context.service';
+
+/** A price the visitor can actually be charged, in the currency the store shows them. */
+interface VisitorPrice {
+  price: number;
+  originalPrice?: number;
+}
+
+/**
+ * A running offer takes its percentage off the visitor's price; the struck-through price is the
+ * higher one before it. Rounded like the server (ActiveOffers.Apply, half away from zero), because
+ * checkout charges the server's figure and the cart must show the same one.
+ */
+function applyOffer(price: VisitorPrice, offerPercent: unknown): VisitorPrice {
+  const percent = Number(offerPercent);
+  if (!(percent > 0 && percent < 100)) return price;
+  const cents = Math.round(price.price * 100);
+  const keep = Math.round((100 - percent) * 100);
+  const discounted = Math.floor((cents * keep + 5000) / 10000) / 100;
+  return { price: discounted, originalPrice: Math.max(price.originalPrice ?? 0, price.price) };
+}
 
 const ID_ALIAS_MAP: Record<string, string> = {
   'home-product-1': 'prod-2',
@@ -49,6 +70,36 @@ const GUID_MAP: Record<string, string> = {
 })
 export class ProductRepositoryImpl implements IProductRepository {
   private http = inject(HttpClient);
+  private context = inject(ContextService);
+
+  /**
+   * The product's price for this visitor: their country's price when they come from one of the
+   * store's countries (a product with no price there is not offered to them), else the
+   * international USD price. This is the price checkout charges.
+   */
+  private visitorPrice(p: any): VisitorPrice | null {
+    if (!Array.isArray(p.countryPrices)) {
+      const legacy = p.price ?? p.basePrice;
+      return legacy != null ? { price: legacy, originalPrice: p.originalPrice ?? undefined } : null;
+    }
+
+    const countryId = this.context.currentCountryId();
+    if (countryId) {
+      const own = p.countryPrices.find((cp: any) => cp.countryId === countryId);
+      return own ? { price: own.price, originalPrice: own.originalPrice ?? undefined } : null;
+    }
+
+    return p.internationalPrice != null
+      ? { price: p.internationalPrice, originalPrice: p.internationalOriginalPrice ?? undefined }
+      : null;
+  }
+
+  /** Maps an API product, or returns null when it has no price for this visitor. */
+  private mapOfferedProduct(p: any): Product | null {
+    const price = this.visitorPrice(p);
+    if (!price) return null;
+    return { ...this.mapProduct(p), ...applyOffer(price, p.offerPercent) };
+  }
 
   private mapProduct(p: any): Product {
     let sizeChart: any[] = [];
@@ -154,7 +205,7 @@ export class ProductRepositoryImpl implements IProductRepository {
         map(res => {
           const items = res?.data ?? res ?? [];
           if (!Array.isArray(items) || items.length === 0) return products;
-          return items.map(p => this.mapProduct(p));
+          return items.map(p => this.mapOfferedProduct(p)).filter((p): p is Product => p !== null);
         }),
         catchError(() => of(products))
       );
@@ -168,7 +219,8 @@ export class ProductRepositoryImpl implements IProductRepository {
       return this.http.get<any>(`${environment.apiBaseUrl}/products/${guid}`).pipe(
         map(res => {
           const p = res?.data ?? res;
-          return p ? this.mapProduct(p) : this.findLocalProduct(id);
+          // Not sold in the visitor's country: the page shows its «not found» state.
+          return p ? this.mapOfferedProduct(p) ?? undefined : this.findLocalProduct(id);
         }),
         catchError(() => of(this.findLocalProduct(id)))
       );
@@ -181,7 +233,7 @@ export class ProductRepositoryImpl implements IProductRepository {
       return this.http.get<any>(`${environment.apiBaseUrl}/products/slug/${slug}`).pipe(
         map(res => {
           const p = res?.data ?? res;
-          return p ? this.mapProduct(p) : this.findLocalProduct(slug);
+          return p ? this.mapOfferedProduct(p) ?? undefined : this.findLocalProduct(slug);
         }),
         catchError(() => of(this.findLocalProduct(slug)))
       );

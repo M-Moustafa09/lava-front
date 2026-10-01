@@ -181,7 +181,7 @@ export class AllShapersPageComponent implements OnInit {
   }
 
   isFavorite(productId: string) {
-    return this.favoritesService.favoriteProductIds().includes(productId);
+    return this.favoritesService.isFavorite(productId);
   }
 
   toggleFavorite(productId: string, isFav: boolean) {

@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, firstValueFrom, of, tap, timeout } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface AppContext {
@@ -9,6 +9,8 @@ export interface AppContext {
   countryId?: string;
   currency: string;
 }
+
+const CONTEXT_TIMEOUT_MS = 4000;
 
 @Injectable({
   providedIn: 'root'
@@ -20,30 +22,34 @@ export class ContextService {
   public currentCountry = signal<string>('Unknown');
   public currentCountryId = signal<string | null>(null);
   private visitLogged = false;
+  private initPromise?: Promise<void>;
 
   constructor(private http: HttpClient, private translate: TranslateService) {}
 
-  initContext(): void {
-    const explicitCurrency = localStorage.getItem(this.CURRENCY_STORAGE_KEY);
-    
-    // Resolve context
-    this.http.get<AppContext>(`${environment.apiUrl}/v1/context/init`)
-      .pipe(
-        catchError(() => of<AppContext>({ country: 'Unknown', currency: 'USD', countryId: undefined }))
+  /**
+   * Resolves the visitor's country once, before the first render (APP_INITIALIZER): it decides
+   * every price shown. A visitor from one of the store's countries sees that country's prices in
+   * its currency; anyone else sees the international USD price.
+   */
+  init(): Promise<void> {
+    if (this.initPromise) return this.initPromise;
+    const international: AppContext = { country: 'Unknown', currency: 'USD', countryId: undefined };
+    this.initPromise = firstValueFrom(
+      this.http.get<AppContext>(`${environment.apiUrl}/v1/context/init`).pipe(
+        timeout(CONTEXT_TIMEOUT_MS),
+        catchError(() => of(international))
       )
-      .subscribe((context: AppContext) => {
-        this.currentCountry.set(context.country);
-        if (context.countryId) {
-          this.currentCountryId.set(context.countryId);
-        }
-        
-        // Priority: Explicit LocalStorage > Detected Context > USD
-        if (explicitCurrency) {
-          this.setCurrency(explicitCurrency);
-        } else {
-          this.setCurrency(context.currency || 'USD');
-        }
-      });
+    ).then(context => {
+      const ctx = context ?? international;
+      this.currentCountry.set(ctx.country);
+      this.currentCountryId.set(ctx.countryId || null);
+      this.setCurrency(ctx.countryId ? (ctx.currency || 'USD') : 'USD');
+    });
+    return this.initPromise;
+  }
+
+  initContext(): void {
+    void this.init();
   }
 
   logVisit(page: string = 'home'): void {

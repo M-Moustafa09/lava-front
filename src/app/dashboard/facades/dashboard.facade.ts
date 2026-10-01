@@ -242,6 +242,13 @@ export class DashboardFacade {
     });
   }
 
+  approveBankTransfer(orderId: string): void {
+    this.orderRepo.approveBankTransfer(orderId).subscribe(() => {
+      this.updateOrder(orderId, { status: 'confirmed', paymentStatus: 'paid' });
+      this.showNotice('تم اعتماد التحويل البنكي');
+    });
+  }
+
   bulkUpdateStatus(status: TrackedOrderStatus): void {
     const ids = this.filteredOrders().map(o => o.id);
     const updater = { name: this.activeAccount().name };

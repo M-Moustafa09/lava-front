@@ -272,6 +272,18 @@ export class OrderRepositoryImpl implements IOrderRepository {
     );
   }
 
+  /** Approves the order's bank-transfer receipt; the API marks the order paid when it does. */
+  approveBankTransfer(orderId: string): Observable<boolean> {
+    if (environment.useMockData) return of(true);
+    return this.http.get<any>(`${environment.apiBaseUrl}/bank-transfers/order/${orderId}`).pipe(
+      switchMap(res => {
+        const transferId = res?.data?.id;
+        if (!transferId || res?.data?.status !== 'PendingReview') return of(true);
+        return this.http.patch(`${environment.apiBaseUrl}/bank-transfers/${transferId}/review`, { approved: true }).pipe(map(() => true));
+      })
+    );
+  }
+
   /** The orders endpoint is paged; the dashboard filters and paginates on its own, so it gets every page. */
   private fetchAllOrderPages(): Observable<any[]> {
     const url = `${environment.apiBaseUrl}/orders`;

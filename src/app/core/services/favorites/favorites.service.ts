@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { environment } from '../../../../environments/environment';
+import { ProductRepositoryImpl } from '../../../data/repositories/product.repository.impl';
 
 const GUEST_ID_KEY = 'lk-guest-id';
 
@@ -11,6 +12,7 @@ const GUEST_ID_KEY = 'lk-guest-id';
 })
 export class FavoritesService {
   private http = inject(HttpClient);
+  private productRepo = inject(ProductRepositoryImpl);
   private favoriteIdsSignal = signal<string[]>([]);
   public favoriteProductIds = this.favoriteIdsSignal.asReadonly();
   private guestId = '';
@@ -33,14 +35,20 @@ export class FavoritesService {
   fetchFavorites() {
     this.http.get<any>(`${environment.apiBaseUrl}/favorites`, { headers: this.getHeaders() }).subscribe({
       next: (res: any) => {
-        const ids = (res?.data || res || []).map((f: any) => f.productId || f.id);
+        const ids = (res?.data || res || []).map((f: any) => String(f.productId || f.id).toLowerCase());
         this.favoriteIdsSignal.set(ids);
       },
       error: (err: any) => console.error(err)
     });
   }
 
-  toggleFavorite(productId: string) {
+  /** Some pages still carry catalogue keys like "prod-1"; the API only knows product GUIDs. */
+  private toKey(productId: string): string {
+    return this.productRepo.getRealProductId(productId).toLowerCase();
+  }
+
+  toggleFavorite(rawProductId: string) {
+    const productId = this.toKey(rawProductId);
     const current = this.favoriteIdsSignal();
     const exists = current.includes(productId);
     
@@ -69,6 +77,6 @@ export class FavoritesService {
   }
 
   isFavorite(productId: string): boolean {
-    return this.favoriteProductIds().includes(productId);
+    return this.favoriteProductIds().includes(this.toKey(productId));
   }
 }

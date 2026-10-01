@@ -62,7 +62,7 @@ export class ProductDetailPageComponent {
   quantity = signal(1);
   activeTab = signal('description');
 
-  wishlist = computed(() => this.product ? this.favoritesService.favoriteProductIds().includes(this.product.id) : false);
+  wishlist = computed(() => this.product ? this.favoritesService.isFavorite(this.product.id) : false);
 
   ratingRows = [
       { value: 5, count: 198, width: 78 },

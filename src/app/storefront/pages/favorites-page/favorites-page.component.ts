@@ -44,6 +44,8 @@ const dummyProducts: Product[] = [
 const homeProducts: any[] = [];
 const homeProductById = new Map(homeProducts.map(item => [item.productId, item]));
 import { LocalizeFieldPipe } from '../../../shared/pipes/localize-field.pipe';
+import { FavoritesService } from '../../../core/services/favorites/favorites.service';
+import { ProductRepositoryImpl } from '../../../data/repositories/product.repository.impl';
 
 @Component({
   selector: 'app-favorites-page',
@@ -68,24 +70,33 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   private configService = inject(FavoritesPageConfigService);
   pageConfig = this.configService.pageConfig;
 
-  favoriteProductIds = signal<string[]>(['prod-1', 'prod-2']); // Initial dummy data
+  private favoritesService = inject(FavoritesService);
+  private productRepo = inject(ProductRepositoryImpl);
   sortMode = signal<SortMode>('latest');
-  
+
+  /** The store's products; a favorite is shown only once its product is known. */
+  private products = signal<Product[]>([]);
+
   favoriteProducts = computed(() => {
-    const favoriteOrder = new Map(this.favoriteProductIds().map((productId, index) => [productId, index]));
-    const resolved = this.favoriteProductIds()
-      .map(productId => dummyProducts.find(product => product.id === productId))
+    const ids = this.favoritesService.favoriteProductIds().map(id => id.toLowerCase());
+    const order = new Map(ids.map((id, index) => [id, index]));
+    const byId = new Map(this.products().map(p => [p.id.toLowerCase(), p]));
+
+    const resolved = ids
+      .map(id => byId.get(id))
       .filter((product): product is Product => Boolean(product))
-      .map(p => this.resolveFavoriteProduct(p));
+      .map(product => this.resolveFavoriteProduct(product));
 
     return resolved.sort((first, second) => {
       if (this.sortMode() === 'price-low') return first.price - second.price;
       if (this.sortMode() === 'price-high') return second.price - first.price;
-      return (favoriteOrder.get(second.product.id) ?? 0) - (favoriteOrder.get(first.product.id) ?? 0);
+      // The ids come newest first (the server orders them by when they were added).
+      return (order.get(first.product.id.toLowerCase()) ?? 0) - (order.get(second.product.id.toLowerCase()) ?? 0);
     });
   });
 
   ngOnInit() {
+    this.productRepo.getProducts().subscribe(products => this.products.set(products));
   }
 
   ngOnDestroy() {
@@ -95,7 +106,7 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   private toastService = inject(ToastService);
 
   removeFavorite(id: string) {
-    this.favoriteProductIds.update(ids => ids.filter(i => i !== id));
+    this.favoritesService.removeFavorite(id);
   }
 
   addToCart(product: Product, size: string) {

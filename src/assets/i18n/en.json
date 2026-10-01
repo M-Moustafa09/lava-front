@@ -702,7 +702,11 @@
     "ORDER_SHIPPED_TITLE": "Order Shipped",
     "ORDER_SHIPPED_MSG": "Your order #LK-2025-1847 has been shipped! Tracking code: TK-882910-FX",
     "FLASH_SALE_TITLE": "Flash Sale — 40% Off!",
-    "FLASH_SALE_MSG": "Limited time offer on all waist trainers. Shop now before it ends!"
+    "FLASH_SALE_MSG": "Limited time offer on all waist trainers. Shop now before it ends!",
+    "TYPE_ORDER": "Order update",
+    "TYPE_CHAT": "New message",
+    "TYPE_OFFER": "New offer",
+    "TYPE_SYSTEM": "Notice"
   },
   "ORDER": {
     "ADMIN": "Admin"

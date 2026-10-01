@@ -321,15 +321,13 @@ export class DashboardHomePageComponent implements OnInit, OnDestroy {
       });
       this.facade.showNotice('تم تأجيل الطلب بنجاح');
     } else if (kind === 'approve') {
-      this.facade.updateOrder(orderId, { status: 'confirmed', paymentStatus: 'paid' });
-      this.facade.showNotice('تم اعتماد التحويل البنكي');
+      this.facade.approveBankTransfer(orderId);
     }
     this.closeRowAction();
   }
 
   approveBankTransfer(orderId: string): void {
-    this.facade.updateOrder(orderId, { status: 'confirmed', paymentStatus: 'paid' });
-    this.facade.showNotice('تم اعتماد التحويل البنكي');
+    this.facade.approveBankTransfer(orderId);
     this.isApprovalsOpen = false;
   }
 
