@@ -6,6 +6,7 @@ import { IOrderRepository } from '../../domain/interfaces/order.repository';
 import { TrackedOrder, TrackedOrderStatus, TrackedOrderStatusUpdater } from '../../domain/models/order.model';
 import { SEED_TRACKED_ORDERS } from '../mock/seed-orders.mock';
 import { environment } from '../../../environments/environment';
+import { ContextService } from '../../core/services/context/context.service';
 
 const STORAGE_KEY = `${environment.storagePrefix}completed-orders`;
 
@@ -14,6 +15,7 @@ const STORAGE_KEY = `${environment.storagePrefix}completed-orders`;
 })
 export class OrderRepositoryImpl implements IOrderRepository {
   private http = inject(HttpClient);
+  private context = inject(ContextService);
 
   getOrders(): Observable<TrackedOrder[]> {
     if (!environment.useMockData) {
@@ -84,7 +86,7 @@ export class OrderRepositoryImpl implements IOrderRepository {
   createOrder(order: TrackedOrder): Observable<TrackedOrder> {
     if (!environment.useMockData) {
       const isGuid = (val: any) => typeof val === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val);
-      const DEFAULT_PRODUCT_ID = '199dab15-2e2e-41a6-83d6-445cecae2681';
+      const DEFAULT_PRODUCT_ID = '3D5D8C97-25BC-4457-A721-9EF43297FD54';
       const isBank = (order.paymentMethod || '').includes('تحويل') || (order.paymentMethod || '').toLowerCase().includes('bank') || !!order.bankTransferReceipt;
 
       const payload = {
@@ -97,7 +99,8 @@ export class OrderRepositoryImpl implements IOrderRepository {
           quantity: i.quantity || 1
         })),
         guestName: order.customerName,
-        guestCountryName: order.country
+        guestCountryName: order.country,
+        countryId: (order as any).countryId ?? this.context.currentCountryId()
       };
 
       return this.http.post<any>(`${environment.apiBaseUrl}/orders`, payload).pipe(

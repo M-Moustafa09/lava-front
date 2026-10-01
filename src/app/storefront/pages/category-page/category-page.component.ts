@@ -61,7 +61,7 @@ export class CategoryPageComponent implements OnInit {
   
   filterOpen = signal(false);
   sortBy = signal('popular');
-  priceRange = signal([0, 200]);
+  priceRange = signal([0, 100000]);
   showSortDropdown = signal(false);
 
   baseData = signal<any[]>([]);
@@ -144,7 +144,7 @@ export class CategoryPageComponent implements OnInit {
   }
 
   resetFilter() {
-    this.priceRange.set([0, 200]);
+    this.priceRange.set([0, 100000]);
     this.filterOpen.set(false);
   }
 }

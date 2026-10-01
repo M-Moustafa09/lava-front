@@ -3,7 +3,7 @@ export const environment = {
   apiBaseUrl: '/api',
   apiUrl: '/api',
   useMockData: false,
-  useMockProducts: true,
+  useMockProducts: false,
   storagePrefix: 'lavva-',
   enableLogging: true,
 };

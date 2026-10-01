@@ -73,7 +73,7 @@ export class ProductRepositoryImpl implements IProductRepository {
       price: p.price ?? p.basePrice ?? 0,
       originalPrice: p.originalPrice != null ? p.originalPrice : undefined,
       images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : ['/assets/home/product-1.png']),
-      category: typeof p.category === 'string' ? p.category : (p.category?.nameEn || p.categoryName || 'waist-trainers'),
+      category: p.categorySlug || (typeof p.category === 'string' ? p.category : (p.category?.nameEn || p.categoryName || 'waist-trainers')),
       sizes: Array.isArray(p.sizes) && p.sizes.length > 0 ? p.sizes : ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
       sizeChart,
       stock: p.stock ?? 10,

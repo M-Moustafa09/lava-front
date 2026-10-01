@@ -5,10 +5,21 @@
     "changeOrigin": true,
     "logLevel": "debug"
   },
-  "/hub": {
+  "/chatHub": {
     "target": "http://localhost:5000",
     "secure": false,
     "ws": true,
+    "changeOrigin": true
+  },
+  "/catalogHub": {
+    "target": "http://localhost:5000",
+    "secure": false,
+    "ws": true,
+    "changeOrigin": true
+  },
+  "/uploads": {
+    "target": "http://localhost:5000",
+    "secure": false,
     "changeOrigin": true
   }
 }
