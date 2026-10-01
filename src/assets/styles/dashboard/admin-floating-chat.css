@@ -278,11 +278,11 @@
 }
 
 .admin-floating-chat__conversation-list > button:hover {
-  background: #f7fbfd;
+  background: #f9fbfa;
 }
 
 .admin-floating-chat__conversation-list > button.is-active {
-  background: #ebf9fb;
+  background: #f0f6f3;
   box-shadow: inset -3px 0 0 var(--admin-chat-primary);
 }
 
@@ -295,8 +295,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(145deg, #e2f6fc, #c6ebf7);
-  color: #1c87ae;
+  background: linear-gradient(145deg, #ebf3ef, #d5e8df);
+  color: #27573f;
   font-size: 11px;
   font-weight: 900;
 }
@@ -382,7 +382,7 @@
   display: flex;
   min-height: 0;
   flex-direction: column;
-  background: #f7fbfc;
+  background: #f8fbfa;
 }
 
 .admin-floating-chat__room-header {
@@ -443,7 +443,7 @@
   padding: 22px 25px 30px;
   background:
     radial-gradient(circle at 20% 20%, rgba(42, 88, 65, 0.035) 0 1px, transparent 1.5px) 0 0 / 22px 22px,
-    #f7fbfc;
+    #f8fbfa;
   overscroll-behavior: contain;
 }
 
@@ -502,8 +502,8 @@
 
 .admin-floating-chat__message--staff p {
   border-top-right-radius: 5px;
-  background: #dff6f7;
-  color: #28766f;
+  background: #e5f1eb;
+  color: #316d4f;
 }
 
 .admin-floating-chat__message--staff > span {
@@ -702,7 +702,7 @@
 }
 
 .admin-floating-chat__room-actions button.is-active {
-  background: #eaf8fc;
+  background: #f0f6f3;
   color: var(--admin-chat-primary-dark);
 }
 
@@ -804,7 +804,7 @@
 
 .admin-floating-chat__message--staff .admin-floating-chat__bubble {
   border-top-right-radius: 5px;
-  background: #dff6f7;
+  background: #e5f1eb;
 }
 
 .admin-floating-chat__bubble > p {
@@ -966,7 +966,7 @@
 }
 
 .admin-floating-chat__message-menu button:hover {
-  background: #eef9fc;
+  background: #f2f8f5;
   color: var(--admin-chat-primary-dark);
 }
 
@@ -994,7 +994,7 @@
 }
 
 .admin-floating-chat__reaction-picker button:hover {
-  background: #eef8fb;
+  background: #f2f7f4;
   transform: scale(1.12);
 }
 
@@ -1036,7 +1036,7 @@
   gap: 10px;
   padding: 8px 16px;
   border-top: 1px solid var(--admin-chat-border);
-  background: #f7fbfc;
+  background: #f8fbfa;
 }
 
 .admin-floating-chat__composer-context > div {
@@ -1268,7 +1268,7 @@
 }
 
 .admin-floating-chat__forward-modal > div > button:hover {
-  background: #f2fbfd;
+  background: #f5faf8;
 }
 
 .admin-floating-chat__forward-modal > div > button > span:not(.admin-floating-chat__avatar) {

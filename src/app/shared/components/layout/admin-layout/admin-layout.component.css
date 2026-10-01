@@ -22,21 +22,21 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  border: 1px solid #ccecf6;
+  border: 1px solid #d9e9e1;
   border-radius: 999px;
-  background: #eaf8fc;
-  color: #178caf;
+  background: #f0f6f3;
+  color: #26543d;
   cursor: pointer;
 }
 
 .dashboard-home__settings-button:hover,
 .dashboard-home__settings-button[aria-expanded='true'] {
-  border-color: #8ed7eb;
-  background: #def4fb;
+  border-color: #a7d2bd;
+  background: #e7f2ed;
 }
 
 .dashboard-home__settings-button:focus-visible {
-  outline: 2px solid #8ed7eb;
+  outline: 2px solid #a7d2bd;
   outline-offset: 2px;
 }
 
@@ -59,7 +59,7 @@
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 10px 30px rgba(18, 39, 28, 0.12);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -83,6 +83,6 @@
 }
 
 .lk-settings-menu__item:hover {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #f5f9f7;
+  color: #428162;
 }

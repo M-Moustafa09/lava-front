@@ -14,12 +14,12 @@ import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
             <div class="order-1 text-right">
                 <span class="text-xs font-bold text-gray-500 mb-1 block text-right">{{ labelAr }}</span>
                 <ng-container *ngIf="!isTextArea; else textareaAr">
-                    <input type="text" dir="rtl" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-blue-500 font-medium text-right" 
+                    <input type="text" dir="rtl" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-forest font-medium text-right" 
                         [(ngModel)]="valueAr" 
                         (ngModelChange)="onValueChange('Ar', $event)" />
                 </ng-container>
                 <ng-template #textareaAr>
-                    <textarea dir="rtl" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-blue-500 font-medium text-right" 
+                    <textarea dir="rtl" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-forest font-medium text-right" 
                         [(ngModel)]="valueAr" 
                         (ngModelChange)="onValueChange('Ar', $event)" rows="3"></textarea>
                 </ng-template>
@@ -27,12 +27,12 @@ import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
             <div class="order-2 text-left">
                 <span class="text-xs font-bold text-gray-500 mb-1 block text-left">{{ labelEn }}</span>
                 <ng-container *ngIf="!isTextArea; else textareaEn">
-                    <input type="text" dir="ltr" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-blue-500 font-medium text-left" 
+                    <input type="text" dir="ltr" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-forest font-medium text-left" 
                         [(ngModel)]="valueEn" 
                         (ngModelChange)="onValueChange('En', $event)" />
                 </ng-container>
                 <ng-template #textareaEn>
-                    <textarea dir="ltr" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-blue-500 font-medium text-left" 
+                    <textarea dir="ltr" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-forest font-medium text-left" 
                         [(ngModel)]="valueEn" 
                         (ngModelChange)="onValueChange('En', $event)" rows="3"></textarea>
                 </ng-template>

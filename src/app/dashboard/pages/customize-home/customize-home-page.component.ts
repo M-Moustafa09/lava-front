@@ -44,7 +44,7 @@ import { dbSyncStatus, forceSaveAllConfigsToDatabase } from '../../../core/servi
                 (click)="previewMode = 'mobile'"
                 [class.bg-white]="previewMode === 'mobile'"
                 [class.shadow-sm]="previewMode === 'mobile'"
-                [class.text-blue-600]="previewMode === 'mobile'"
+                [class.text-forest]="previewMode === 'mobile'"
                 [class.text-gray-500]="previewMode !== 'mobile'"
                 class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
               >
@@ -55,7 +55,7 @@ import { dbSyncStatus, forceSaveAllConfigsToDatabase } from '../../../core/servi
                 (click)="previewMode = 'desktop'"
                 [class.bg-white]="previewMode === 'desktop'"
                 [class.shadow-sm]="previewMode === 'desktop'"
-                [class.text-blue-600]="previewMode === 'desktop'"
+                [class.text-forest]="previewMode === 'desktop'"
                 [class.text-gray-500]="previewMode !== 'desktop'"
                 class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
               >
@@ -93,7 +93,7 @@ import { dbSyncStatus, forceSaveAllConfigsToDatabase } from '../../../core/servi
               type="button"
               (click)="manualSave()"
               [disabled]="isManualSaving || dbStatus() === 'saving'"
-              class="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+              class="flex items-center gap-2 px-5 py-2 bg-forest text-white rounded-md font-medium hover:bg-forest-hover transition-colors shadow-sm shadow-forest/30 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
               <lucide-icon name="lock" [size]="16" class="mb-0.5"></lucide-icon>
               <span>{{ (isManualSaving || dbStatus() === 'saving') ? 'جاري الحفظ...' : 'حفظ في قاعدة البيانات' }}</span>
             </button>

@@ -312,7 +312,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
     .dashboard-modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(18, 39, 28, 0.65);
       backdrop-filter: blur(4px);
     }
     .dashboard-modal {
@@ -354,7 +354,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
       margin: 0;
       font-size: 1.15rem;
       font-weight: 700;
-      color: #0f172a;
+      color: #12271c;
     }
     .dashboard-modal__close {
       background: #f1f5f9;
@@ -371,7 +371,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
     }
     .dashboard-modal__close:hover {
       background: #e2e8f0;
-      color: #0f172a;
+      color: #12271c;
     }
     .dashboard-modal__body {
       padding: 20px 24px;
@@ -448,7 +448,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
     }
     .order-num {
       font-size: 1rem;
-      color: #0f172a;
+      color: #12271c;
       font-weight: 700;
     }
     .status {

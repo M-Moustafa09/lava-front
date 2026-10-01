@@ -29,15 +29,15 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
       <app-section-card title="تفاصيل بطاقة المنتج" [index]="1" [showToggle]="false" [enabled]="true" [isFirst]="false" [isLast]="false"
         [draggable]="false" [showReorder]="false" [showCopy]="false" [showDelete]="false">
         <div class="flex items-center gap-2 mb-2">
-          <input type="checkbox" [ngModel]="config().showRating" (ngModelChange)="updateConfig({ showRating: $event })" class="rounded text-blue-600 focus:ring-blue-500" />
+          <input type="checkbox" [ngModel]="config().showRating" (ngModelChange)="updateConfig({ showRating: $event })" class="rounded text-forest focus:ring-forest" />
           <span class="text-sm font-medium">إظهار النجوم (التقييم)</span>
         </div>
         <div class="flex items-center gap-2 mb-2">
-          <input type="checkbox" [ngModel]="config().showReviewsCount" (ngModelChange)="updateConfig({ showReviewsCount: $event })" class="rounded text-blue-600 focus:ring-blue-500" />
+          <input type="checkbox" [ngModel]="config().showReviewsCount" (ngModelChange)="updateConfig({ showReviewsCount: $event })" class="rounded text-forest focus:ring-forest" />
           <span class="text-sm font-medium">{{ 'DASHBOARD.AUTO_STR_99' | translate }}</span>
         </div>
         <div class="flex items-center gap-2 mb-2">
-          <input type="checkbox" [ngModel]="config().showOriginalPrice" (ngModelChange)="updateConfig({ showOriginalPrice: $event })" class="rounded text-blue-600 focus:ring-blue-500" />
+          <input type="checkbox" [ngModel]="config().showOriginalPrice" (ngModelChange)="updateConfig({ showOriginalPrice: $event })" class="rounded text-forest focus:ring-forest" />
           <span class="text-sm font-medium">إظهار السعر قبل الخصم (إذا وُجد)</span>
         </div>
       </app-section-card>

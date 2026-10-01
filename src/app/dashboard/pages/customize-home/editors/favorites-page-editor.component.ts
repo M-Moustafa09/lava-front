@@ -35,21 +35,21 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_117' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showToolbar" (ngModelChange)="updateConfig({showToolbar: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors mb-2">
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_81' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showSort" (ngModelChange)="updateConfig({showSort: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors mb-2">
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_118' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showCount" (ngModelChange)="updateConfig({showCount: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             
@@ -59,7 +59,7 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_36' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showAddAllToCart" (ngModelChange)="updateConfig({showAddAllToCart: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <app-bilingual-input title="نص زر الإضافة للسلة" labelAr="عربي / AR" labelEn="English / EN" 
@@ -73,35 +73,35 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_327' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showProductColor" (ngModelChange)="updateConfig({showProductColor: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors mb-2">
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_282' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showProductSize" (ngModelChange)="updateConfig({showProductSize: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors mb-2">
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_119' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showProductPrice" (ngModelChange)="updateConfig({showProductPrice: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors mb-2">
                 <span class="text-sm text-gray-700">إظهار السعر القديم (قبل الخصم)</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showProductOldPrice" (ngModelChange)="updateConfig({showProductOldPrice: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors mb-2">
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_139' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showProductStock" (ngModelChange)="updateConfig({showProductStock: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <hr class="my-3 border-gray-100" />
@@ -109,14 +109,14 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_204' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showRemoveAction" (ngModelChange)="updateConfig({showRemoveAction: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors mb-2">
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_82' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showMoveToCartAction" (ngModelChange)="updateConfig({showMoveToCartAction: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
         </app-section-card>
@@ -126,7 +126,7 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                 <span class="text-sm text-gray-700">إظهار الرسم التوضيحي (Illustration)</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showEmptyStateIllustration" (ngModelChange)="updateConfig({showEmptyStateIllustration: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <app-bilingual-input title="العنوان" labelAr="عربي / AR" labelEn="English / EN" 

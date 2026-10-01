@@ -22,7 +22,7 @@
         <button
           type="button"
           (click)="openCreate()"
-          class="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200 cursor-pointer">
+          class="flex items-center gap-2 px-5 py-2 bg-forest text-white rounded-md font-medium hover:bg-forest-hover transition-colors shadow-sm shadow-forest/30 cursor-pointer">
           <lucide-icon [img]="PlusIcon" [size]="16"></lucide-icon>
           <span>{{ 'ADMIN_PRODUCTS.ADD' | translate }}</span>
         </button>
@@ -66,9 +66,6 @@
               <td class="font-semibold" [class.text-gray-900]="product.internationalPrice != null" [class.lk-products-price--missing]="product.internationalPrice == null">{{ priceSummary(product) }}</td>
               <td>
                 <span *ngIf="product.productCode" class="lk-products-code" dir="ltr">{{ product.productCode }}</span>
-                <span *ngIf="!product.productCode" class="lk-products-code lk-products-code--missing">
-                  {{ 'ADMIN_PRODUCTS.NO_CODE' | translate }}
-                </span>
               </td>
               <td>
                 <div class="flex items-center gap-1.5">
@@ -284,7 +281,7 @@
           type="button"
           (click)="save()"
           [disabled]="isSaving()"
-          class="px-5 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+          class="px-5 py-2 bg-forest text-white rounded-md font-medium hover:bg-forest-hover transition-colors shadow-sm shadow-forest/30 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
           <ng-container *ngIf="uploadProgress() === null; else uploading">
             {{ (isSaving() ? 'ADMIN_PRODUCTS.SAVING' : 'ADMIN_PRODUCTS.SAVE') | translate }}
           </ng-container>

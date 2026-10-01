@@ -2,7 +2,7 @@
   --lk-primary: #2A5841;
   --lk-primary-dark: #1E4130;
   --lk-primary-soft: #F4F7F5;
-  --lk-text-primary: #0f172a;
+  --lk-text-primary: #12271c;
   --lk-text-secondary: #64748b;
   --lk-border: #e2e8f0;
   --lk-card-bg: #ffffff;
@@ -36,7 +36,7 @@
   border: 1px solid rgba(42, 88, 65, 0.15);
   border-radius: 20px;
   padding: 40px 32px;
-  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08),
+  box-shadow: 0 10px 30px -5px rgba(18, 39, 28, 0.08),
               0 4px 12px -2px rgba(42, 88, 65, 0.06);
   backdrop-filter: blur(10px);
 }

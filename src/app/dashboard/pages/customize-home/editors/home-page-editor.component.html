@@ -32,15 +32,15 @@
                class="relative w-32 flex-shrink-0 group"
                (dragover)="$event.preventDefault()"
                (drop)="onDirectDropSlide($event, section, sIdx)">
-            <div class="w-full h-24 rounded-lg overflow-hidden border-2 border-transparent group-hover:border-blue-500 transition-colors">
+            <div class="w-full h-24 rounded-lg overflow-hidden border-2 border-transparent group-hover:border-forest transition-colors">
               <img [src]="slide.image" alt="" class="w-full h-full object-cover" />
             </div>
-            <div class="absolute top-1 right-1 bg-blue-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">
+            <div class="absolute top-1 right-1 bg-forest text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">
               {{ sIdx + 1 }}
             </div>
             <div class="absolute top-1 left-1 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <button (click)="deleteSlide(section, sIdx)" class="p-1.5 bg-white text-red-500 rounded-md shadow hover:bg-red-50" title="حذف"><lucide-icon name="trash-2" [size]="14"></lucide-icon></button>
-              <button (click)="duplicateSlide(section, sIdx)" class="p-1.5 bg-white text-blue-500 rounded-md shadow hover:bg-blue-50" title="تكرار"><lucide-icon name="copy" [size]="14"></lucide-icon></button>
+              <button (click)="duplicateSlide(section, sIdx)" class="p-1.5 bg-white text-forest rounded-md shadow hover:bg-forest-light" title="تكرار"><lucide-icon name="copy" [size]="14"></lucide-icon></button>
               <button (click)="promptImageChange(section, sIdx, slide.image)" class="p-1.5 bg-white text-green-500 rounded-md shadow hover:bg-green-50" title="تغيير الصورة"><lucide-icon name="edit-2" [size]="14"></lucide-icon></button>
             </div>
           </div>
@@ -87,7 +87,7 @@
                   <input
                     type="text"
                     dir="rtl"
-                    class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 outline-none focus:border-blue-500 font-medium text-gray-800 text-right"
+                    class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 outline-none focus:border-forest font-medium text-gray-800 text-right"
                     [(ngModel)]="benefit.textAr"
                     (ngModelChange)="benefit.text = benefit.textAr || benefit.textEn; updateSection(section.id, { benefits: section.benefits })"
                     placeholder="نص الميزة"
@@ -98,7 +98,7 @@
                   <input
                     type="text"
                     dir="ltr"
-                    class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 outline-none focus:border-blue-500 font-medium text-gray-800 text-left"
+                    class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 outline-none focus:border-forest font-medium text-gray-800 text-left"
                     [(ngModel)]="benefit.textEn"
                     (ngModelChange)="benefit.text = benefit.textAr || benefit.textEn; updateSection(section.id, { benefits: section.benefits })"
                     placeholder="Benefit Text"
@@ -111,7 +111,7 @@
             </button>
             <label class="relative inline-flex items-center cursor-pointer ml-1" title="تفعيل / تعطيل الميزة">
               <input type="checkbox" class="sr-only peer" [checked]="benefit.enabled !== false" (change)="updateBenefit(section, bIdx, { enabled: $any($event.target).checked })" />
-              <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+              <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-forest"></div>
             </label>
           </div>
         </div>
@@ -137,14 +137,14 @@
         </div>
 
         <div class="flex flex-row items-center gap-3 bg-gray-50 p-2 rounded-lg border border-gray-100">
-          <div class="w-24 h-16 rounded-md overflow-hidden flex items-center justify-center bg-gray-200 cursor-pointer border-2 border-dashed border-transparent hover:border-blue-400 transition-colors"
+          <div class="w-24 h-16 rounded-md overflow-hidden flex items-center justify-center bg-gray-200 cursor-pointer border-2 border-dashed border-transparent hover:border-forest/60 transition-colors"
                title="اسحب صورة هنا لتغييرها"
                (dragover)="$event.preventDefault()"
                (drop)="onDirectDropPromo($event, section)">
             <img *ngIf="section.image" [src]="section.image" alt="Banner" class="w-full h-full object-cover" />
             <lucide-icon *ngIf="!section.image" name="image" class="text-gray-400"></lucide-icon>
           </div>
-          <button (click)="promptSectionImageChange(section)" class="flex flex-row items-center gap-2 px-4 py-2 border border-blue-200 text-blue-600 rounded-md text-sm hover:bg-blue-50 bg-white mr-auto">
+          <button (click)="promptSectionImageChange(section)" class="flex flex-row items-center gap-2 px-4 py-2 border border-forest/30 text-forest rounded-md text-sm hover:bg-forest-light bg-white mr-auto">
             <lucide-icon name="edit-2" [size]="16"></lucide-icon><span>تغيير الصورة</span>
           </button>
         </div>
@@ -173,17 +173,17 @@
           <div class="flex items-start gap-3 w-full">
             <label class="relative inline-flex items-center cursor-pointer flex-shrink-0 mt-2" title="إظهار / إخفاء العنوان">
               <input type="checkbox" class="sr-only peer" [checked]="section.showTitle !== false" (change)="updateSection(section.id, { showTitle: $any($event.target).checked })" />
-              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
             </label>
             <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2" dir="rtl">
               <div class="flex flex-col gap-1">
                 <label class="text-[10px] font-bold text-gray-500 uppercase text-right">عربي / AR</label>
-                <input type="text" dir="rtl" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-blue-500 font-medium text-right" 
+                <input type="text" dir="rtl" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-forest font-medium text-right" 
                   [ngModel]="section.titleAr || ''" (ngModelChange)="section.title = $event || section.titleEn; updateSection(section.id, { titleAr: $event, title: section.title })" placeholder="عنوان القسم (عربي)" />
               </div>
               <div class="flex flex-col gap-1">
                 <label class="text-[10px] font-bold text-gray-500 uppercase text-left">English / EN</label>
-                <input type="text" dir="ltr" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-blue-500 font-medium text-left" 
+                <input type="text" dir="ltr" class="w-full text-sm bg-gray-50 border border-gray-200 rounded-md px-3 py-2 outline-none focus:border-forest font-medium text-left" 
                   [ngModel]="section.titleEn || ''" (ngModelChange)="section.title = section.titleAr || $event; updateSection(section.id, { titleEn: $event, title: section.title })" placeholder="Section Title (EN)" />
               </div>
             </div>
@@ -206,7 +206,7 @@
             </ng-container>
           </div>
         </div>
-        <button (click)="openContentEditor(section)" class="w-full flex items-center justify-center gap-2 py-2 border border-blue-200 text-blue-600 bg-white rounded-lg text-sm hover:bg-blue-50 transition-colors mt-2 font-medium">
+        <button (click)="openContentEditor(section)" class="w-full flex items-center justify-center gap-2 py-2 border border-forest/30 text-forest bg-white rounded-lg text-sm hover:bg-forest-light transition-colors mt-2 font-medium">
           <lucide-icon name="edit-2" [size]="16"></lucide-icon><span>تعديل محتوى القسم (إدارة العناصر)</span>
         </button>
       </app-section-card>
@@ -230,17 +230,17 @@
       <div class="flex-1 overflow-y-auto space-y-3 custom-scrollbar">
         <div class="flex items-center justify-between">
           <span class="text-sm font-bold text-gray-800">قائمة العناصر ({{ (editingSection.type === 'categories' ? editingSection.categories?.length : editingSection.products?.length) || 0 }})</span>
-          <button (click)="addItemToActiveSection()" class="flex items-center gap-1 text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 px-2.5 py-1.5 rounded-md font-bold">
+          <button (click)="addItemToActiveSection()" class="flex items-center gap-1 text-xs bg-forest-light text-forest hover:bg-forest-light px-2.5 py-1.5 rounded-md font-bold">
             <lucide-icon name="plus" [size]="14"></lucide-icon><span>إضافة عنصر</span>
           </button>
         </div>
 
         <div *ngIf="editingSection.type === 'categories'" class="space-y-2">
-          <div *ngFor="let cat of editingSection.categories; let cIdx = index; trackBy: trackByItemId" class="flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-200 hover:border-blue-200 transition-all">
+          <div *ngFor="let cat of editingSection.categories; let cIdx = index; trackBy: trackByItemId" class="flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-200 hover:border-forest/30 transition-all">
             <div class="flex items-center gap-3 flex-1 min-w-0">
               <!-- Click to upload or Drag & Drop Image -->
               <div class="relative w-12 h-12 rounded-lg border-2 border-dashed overflow-hidden cursor-pointer group bg-white flex items-center justify-center flex-shrink-0 transition-all shadow-sm"
-                   [ngClass]="activeDragItemIndex === cIdx ? 'border-blue-500 bg-blue-50 scale-105 ring-2 ring-blue-200' : 'border-gray-300 hover:border-blue-400'"
+                   [ngClass]="activeDragItemIndex === cIdx ? 'border-forest bg-forest-light scale-105 ring-2 ring-forest/30' : 'border-gray-300 hover:border-forest/60'"
                    (click)="catFileInput.click()"
                    (dragover)="onItemDragOver($event, cIdx)"
                    (dragleave)="onItemDragLeave($event, cIdx)"
@@ -259,7 +259,7 @@
                          [(ngModel)]="cat.nameAr"
                          (ngModelChange)="cat.name = cat.nameAr || cat.nameEn; updateSection(editingSection.id, { categories: editingSection.categories })"
                          dir="rtl"
-                         class="w-full text-sm font-semibold bg-white border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-100 transition-all text-right"
+                         class="w-full text-sm font-semibold bg-white border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-forest/60 focus:ring-1 focus:ring-forest-light transition-all text-right"
                          placeholder="الاسم (بالعربي)" />
                 </div>
                 <div class="flex flex-col gap-1">
@@ -268,7 +268,7 @@
                          [(ngModel)]="cat.nameEn"
                          (ngModelChange)="cat.name = cat.nameAr || cat.nameEn; updateSection(editingSection.id, { categories: editingSection.categories })"
                          dir="ltr"
-                         class="w-full text-sm font-semibold bg-white border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-100 transition-all text-left"
+                         class="w-full text-sm font-semibold bg-white border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-forest/60 focus:ring-1 focus:ring-forest-light transition-all text-left"
                          placeholder="Name (English)" />
                 </div>
               </div>
@@ -280,11 +280,11 @@
         </div>
 
         <div *ngIf="editingSection.type === 'bestsellers'" class="space-y-2">
-          <div *ngFor="let prod of editingSection.products; let pIdx = index; trackBy: trackByItemId" class="flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-200 hover:border-blue-200 transition-all">
+          <div *ngFor="let prod of editingSection.products; let pIdx = index; trackBy: trackByItemId" class="flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-200 hover:border-forest/30 transition-all">
             <div class="flex items-center gap-3 flex-1 min-w-0">
               <!-- Click to upload or Drag & Drop Image -->
               <div class="relative w-12 h-12 rounded-lg border-2 border-dashed overflow-hidden cursor-pointer group bg-white flex items-center justify-center flex-shrink-0 transition-all shadow-sm"
-                   [ngClass]="activeDragItemIndex === pIdx ? 'border-blue-500 bg-blue-50 scale-105 ring-2 ring-blue-200' : 'border-gray-300 hover:border-blue-400'"
+                   [ngClass]="activeDragItemIndex === pIdx ? 'border-forest bg-forest-light scale-105 ring-2 ring-forest/30' : 'border-gray-300 hover:border-forest/60'"
                    (click)="prodFileInput.click()"
                    (dragover)="onItemDragOver($event, pIdx)"
                    (dragleave)="onItemDragLeave($event, pIdx)"
@@ -304,7 +304,7 @@
                            [(ngModel)]="prod.nameAr"
                            (ngModelChange)="prod.name = prod.nameAr || prod.nameEn; updateSection(editingSection.id, { products: editingSection.products })"
                            dir="rtl"
-                           class="w-full text-sm font-semibold bg-white border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-100 transition-all text-right"
+                           class="w-full text-sm font-semibold bg-white border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-forest/60 focus:ring-1 focus:ring-forest-light transition-all text-right"
                            placeholder="اسم المنتج (بالعربي)" />
                   </div>
                   <div class="flex flex-col gap-1">
@@ -313,7 +313,7 @@
                            [(ngModel)]="prod.nameEn"
                            (ngModelChange)="prod.name = prod.nameAr || prod.nameEn; updateSection(editingSection.id, { products: editingSection.products })"
                            dir="ltr"
-                           class="w-full text-sm font-semibold bg-white border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-100 transition-all text-left"
+                           class="w-full text-sm font-semibold bg-white border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-forest/60 focus:ring-1 focus:ring-forest-light transition-all text-left"
                            placeholder="Product Name (English)" />
                   </div>
                 </div>
@@ -328,7 +328,7 @@
       </div>
 
       <div class="pt-4 border-t border-gray-100 flex justify-end gap-2 mt-4">
-        <button (click)="closeContentEditor()" class="px-5 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700">
+        <button (click)="closeContentEditor()" class="px-5 py-2 bg-forest text-white rounded-lg text-sm font-bold hover:bg-forest-hover">
           تم
         </button>
       </div>
@@ -360,7 +360,7 @@
 
       <!-- Drag & Drop Zone -->
       <div class="relative border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2.5"
-           [ngClass]="imageUploadDialog?.isDragging ? 'border-blue-500 bg-blue-50 ring-4 ring-blue-100' : 'border-gray-300 hover:border-blue-400 bg-gray-50/50 hover:bg-blue-50/30'"
+           [ngClass]="imageUploadDialog?.isDragging ? 'border-forest bg-forest-light ring-4 ring-forest-light' : 'border-gray-300 hover:border-forest/60 bg-gray-50/50 hover:bg-forest-light/30'"
            (click)="dialogFileInput.click()"
            (dragover)="onDialogDragOver($event)"
            (dragleave)="onDialogDragLeave($event)"
@@ -368,20 +368,20 @@
         
         <input #dialogFileInput type="file" accept="image/*" class="hidden" (change)="onDialogFileSelected($event)" />
 
-        <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm">
+        <div class="w-12 h-12 rounded-full bg-forest-light text-forest flex items-center justify-center shadow-sm">
           <lucide-icon name="cloud-upload" [size]="24"></lucide-icon>
         </div>
 
         <div class="flex flex-col gap-0.5">
           <span class="text-sm font-bold text-gray-800">اسحب الصورة وأفلتها هنا</span>
-          <span class="text-xs text-gray-500">أو <span class="text-blue-600 font-semibold underline">اضغط لاختيار صورة</span> من جهازك</span>
+          <span class="text-xs text-gray-500">أو <span class="text-forest font-semibold underline">اضغط لاختيار صورة</span> من جهازك</span>
           <span class="text-[11px] text-gray-400 mt-1">يدعم صيغ PNG, JPG, WEBP</span>
         </div>
 
         <!-- Uploading Indicator -->
         <div *ngIf="imageUploadDialog?.isUploading" class="absolute inset-0 bg-white/80 backdrop-blur-xs rounded-xl flex flex-col items-center justify-center gap-2">
-          <lucide-icon name="loader-2" class="animate-spin text-blue-600" [size]="28"></lucide-icon>
-          <span class="text-xs font-semibold text-blue-700">جاري رفع الصورة...</span>
+          <lucide-icon name="loader-2" class="animate-spin text-forest" [size]="28"></lucide-icon>
+          <span class="text-xs font-semibold text-forest-hover">جاري رفع الصورة...</span>
         </div>
       </div>
 
@@ -399,7 +399,7 @@
       <!-- Optional URL input -->
       <div class="mt-3">
         <label class="text-xs font-medium text-gray-600 mb-1 block">أو أدخل رابط الصورة (URL) مباشرة:</label>
-        <input type="text" [(ngModel)]="imageUploadDialog!.previewUrl" class="w-full text-xs bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-blue-400" placeholder="https://example.com/image.png" dir="ltr" />
+        <input type="text" [(ngModel)]="imageUploadDialog!.previewUrl" class="w-full text-xs bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-forest/60" placeholder="https://example.com/image.png" dir="ltr" />
       </div>
 
       <!-- Actions -->
@@ -407,7 +407,7 @@
         <button (click)="closeImageUploadModal()" class="px-4 py-2 text-xs font-bold text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
           إلغاء
         </button>
-        <button (click)="applyImageUploadModal()" [disabled]="!imageUploadDialog?.previewUrl || imageUploadDialog?.isUploading" class="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+        <button (click)="applyImageUploadModal()" [disabled]="!imageUploadDialog?.previewUrl || imageUploadDialog?.isUploading" class="px-5 py-2 text-xs font-bold text-white bg-forest hover:bg-forest-hover disabled:opacity-50 rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
           <span>تطبيق الصورة</span>
         </button>
       </div>

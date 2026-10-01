@@ -51,10 +51,10 @@
 .lk-products-code {
   display: inline-block;
   padding: 2px 9px;
-  border: 1px solid #ccecf6;
+  border: 1px solid #d9e9e1;
   border-radius: 999px;
-  background: #eaf8fc;
-  color: #178caf;
+  background: #f0f6f3;
+  color: #26543d;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 11px;
   font-weight: 600;
@@ -83,9 +83,9 @@
 }
 
 .lk-products-action:hover {
-  border-color: #bfdbfe;
-  background: #eff6ff;
-  color: #2563eb;
+  border-color: #d5e8df;
+  background: #f5f9f7;
+  color: #428162;
 }
 
 .lk-products-action--danger:hover {
@@ -110,7 +110,7 @@
   position: absolute;
   inset: 0;
   border: none;
-  background: rgba(15, 23, 42, .45);
+  background: rgba(18, 39, 28, .45);
   cursor: pointer;
 }
 
@@ -123,7 +123,7 @@
   flex-direction: column;
   border-radius: 16px;
   background: #fff;
-  box-shadow: 0 20px 45px rgba(15, 23, 42, .22);
+  box-shadow: 0 20px 45px rgba(18, 39, 28, .22);
 }
 
 .lk-products-modal--sm {
@@ -169,8 +169,8 @@
 .lk-products-field input:focus,
 .lk-products-field select:focus,
 .lk-products-field textarea:focus {
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, .18);
+  border-color: #93c7ad;
+  box-shadow: 0 0 0 3px rgba(147, 199, 173, .18);
 }
 
 .lk-products-field select:disabled {
@@ -252,8 +252,8 @@
 }
 
 .lk-products-image-add:hover {
-  border-color: #60a5fa;
-  color: #2563eb;
+  border-color: #93c7ad;
+  color: #428162;
 }
 
 .lk-products-image-add input {
@@ -307,8 +307,8 @@
 }
 
 .lk-products-video-add:hover {
-  border-color: #60a5fa;
-  color: #2563eb;
+  border-color: #93c7ad;
+  color: #428162;
 }
 
 .lk-products-video-add.is-disabled {
@@ -362,7 +362,7 @@
 }
 
 .lk-crm-trigger:hover {
-  border-color: #bfdbfe;
+  border-color: #d5e8df;
 }
 
 .lk-crm-selected {
@@ -386,7 +386,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   background: #fff;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, .08);
+  box-shadow: 0 8px 24px rgba(18, 39, 28, .08);
   overflow: hidden;
 }
 
@@ -434,7 +434,7 @@
 
 .lk-crm-list button:hover,
 .lk-crm-list button.is-selected {
-  background: #eff6ff;
+  background: #f5f9f7;
 }
 
 .lk-crm-item-name {

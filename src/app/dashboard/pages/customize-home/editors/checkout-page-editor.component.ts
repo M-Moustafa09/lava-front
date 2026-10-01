@@ -35,15 +35,15 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
                     <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer">
                         <span class="text-xs font-bold text-gray-700">بيانات العميل</span>
-                        <input type="checkbox" [ngModel]="config().showCustomerInfo !== false" (ngModelChange)="updateConfig({showCustomerInfo: $event})" class="rounded text-blue-600 focus:ring-blue-500" />
+                        <input type="checkbox" [ngModel]="config().showCustomerInfo !== false" (ngModelChange)="updateConfig({showCustomerInfo: $event})" class="rounded text-forest focus:ring-forest" />
                     </label>
                     <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer">
                         <span class="text-xs font-bold text-gray-700">طريقة الدفع</span>
-                        <input type="checkbox" [ngModel]="config().showPaymentInfo !== false" (ngModelChange)="updateConfig({showPaymentInfo: $event})" class="rounded text-blue-600 focus:ring-blue-500" />
+                        <input type="checkbox" [ngModel]="config().showPaymentInfo !== false" (ngModelChange)="updateConfig({showPaymentInfo: $event})" class="rounded text-forest focus:ring-forest" />
                     </label>
                     <label class="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-100 cursor-pointer">
                         <span class="text-xs font-bold text-gray-700">ملخص الطلب</span>
-                        <input type="checkbox" [ngModel]="config().showOrderSummary !== false" (ngModelChange)="updateConfig({showOrderSummary: $event})" class="rounded text-blue-600 focus:ring-blue-500" />
+                        <input type="checkbox" [ngModel]="config().showOrderSummary !== false" (ngModelChange)="updateConfig({showOrderSummary: $event})" class="rounded text-forest focus:ring-forest" />
                     </label>
                 </div>
 
@@ -61,7 +61,7 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                 (valueChange)="updateBilingualField('summaryTitle', $event.lang, $event.value)"></app-bilingual-input>
                 
                 <div class="flex items-center gap-2 mb-2 mt-4">
-                    <input type="checkbox" [ngModel]="config().showSafeShopping" (ngModelChange)="updateConfig({showSafeShopping: $event})" class="rounded text-blue-600 focus:ring-blue-500" />
+                    <input type="checkbox" [ngModel]="config().showSafeShopping" (ngModelChange)="updateConfig({showSafeShopping: $event})" class="rounded text-forest focus:ring-forest" />
                     <span class="text-sm font-medium">{{ 'DASHBOARD.AUTO_STR_57' | translate }}</span>
                 </div>
                 

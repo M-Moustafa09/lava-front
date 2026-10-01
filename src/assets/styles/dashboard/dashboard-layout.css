@@ -1,8 +1,8 @@
 /* Shared dashboard shell for every administration page. */
 .dashboard-layout-page {
   min-height: 100vh;
-  background: #f6fafc;
-  color: #11252e;
+  background: #f7fbf9;
+  color: #142b20;
 }
 
 .dashboard-layout-page__header {
@@ -49,7 +49,7 @@
   border: 0;
   border-bottom: 1px solid #e4edf1;
   background: #fff;
-  color: #122a34;
+  color: #163023;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -61,7 +61,7 @@
 }
 
 .dashboard-sidebar__submenu-back svg {
-  color: #16a9c9;
+  color: #2d6549;
 }
 
 .dashboard-sidebar__submenu-title {
@@ -71,7 +71,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #11252e;
+  color: #142b20;
   background: #fff;
 }
 
@@ -81,8 +81,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #0aa5a9;
-  background: #eefafa;
+  color: #204733;
+  background: #f1f7f4;
   border-radius: 8px;
 }
 
@@ -131,8 +131,8 @@
 
 .dashboard-sidebar__submenu-page-row:hover,
 .dashboard-sidebar__submenu-page-row.is-active {
-  color: #048da8;
-  background: #edfafd;
+  color: #357756;
+  background: #f2f8f5;
   font-weight: 800;
 }
 
@@ -157,7 +157,7 @@
   padding: 11px 13px 10px !important;
   background:
     linear-gradient(135deg, transparent 0 35%, rgba(255,255,255,.19) 35% 42%, transparent 42% 50%, rgba(255,255,255,.17) 50% 57%, transparent 57%),
-    linear-gradient(110deg, #115C6B 0%, #0E4E5B 55%, #0A3D47 100%) !important;
+    linear-gradient(110deg, #26563e 0%, #214835 55%, #193829 100%) !important;
 }
 
 .dashboard-sidebar__switch-button,

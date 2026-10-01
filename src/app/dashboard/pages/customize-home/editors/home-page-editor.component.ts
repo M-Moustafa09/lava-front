@@ -129,8 +129,8 @@ export class HomePageEditorComponent implements OnInit, OnDestroy {
     }
     if (card) {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      card.classList.add('ring-2', 'ring-blue-500', 'shadow-lg');
-      setTimeout(() => card?.classList.remove('ring-2', 'ring-blue-500', 'shadow-lg'), 1600);
+      card.classList.add('ring-2', 'ring-forest', 'shadow-lg');
+      setTimeout(() => card?.classList.remove('ring-2', 'ring-forest', 'shadow-lg'), 1600);
     }
   }
 

@@ -9,7 +9,7 @@ import { LucideAngularModule, Plus } from 'lucide-angular';
   template: `
     <button 
       (click)="onClick.emit()"
-      class="flex items-center gap-1.5 px-3 py-1.5 text-blue-600 bg-blue-50 border border-blue-100 rounded-md text-xs font-bold hover:bg-blue-100 transition-colors"
+      class="flex items-center gap-1.5 px-3 py-1.5 text-forest bg-forest-light border border-forest-light rounded-md text-xs font-bold hover:bg-forest-light transition-colors"
     >
       <lucide-icon name="plus" [size]="14" [strokeWidth]="3"></lucide-icon>
       {{ label }}

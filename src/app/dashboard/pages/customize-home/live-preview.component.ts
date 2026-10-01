@@ -191,8 +191,8 @@ export class LivePreviewComponent implements OnInit, OnChanges, OnDestroy {
       style.id = 'preview-pulse-style';
       style.textContent = `
         @keyframes lkPreviewPulse {
-          0% { outline: 3px solid rgba(37, 99, 235, 0.9); box-shadow: 0 0 25px rgba(37, 99, 235, 0.4); }
-          50% { outline: 3px solid rgba(37, 99, 235, 0.6); box-shadow: 0 0 15px rgba(37, 99, 235, 0.25); }
+          0% { outline: 3px solid rgba(66, 129, 98, 0.9); box-shadow: 0 0 25px rgba(66, 129, 98, 0.4); }
+          50% { outline: 3px solid rgba(66, 129, 98, 0.6); box-shadow: 0 0 15px rgba(66, 129, 98, 0.25); }
           100% { outline: 3px solid transparent; box-shadow: none; }
         }
         .lk-preview-highlight-pulse {

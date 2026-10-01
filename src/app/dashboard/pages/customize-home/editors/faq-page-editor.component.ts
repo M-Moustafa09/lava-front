@@ -32,7 +32,7 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                 <span class="text-sm text-gray-700">{{ 'DASHBOARD.AUTO_STR_183' | translate }}</span>
                 <div class="relative inline-flex items-center">
                     <input type="checkbox" class="sr-only peer" [ngModel]="config().showSearch" (ngModelChange)="updateConfig({showSearch: $event})" />
-                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-forest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                 </div>
             </label>
             <app-bilingual-input title="نص مربع البحث (Placeholder)" labelAr="عربي / AR" labelEn="English / EN" 

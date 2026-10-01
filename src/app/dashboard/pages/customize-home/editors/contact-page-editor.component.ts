@@ -42,7 +42,7 @@ export interface ContactMethod {
                                     <lucide-icon [img]="ImageIcon" class="text-gray-400"></lucide-icon>
                                 </ng-template>
                             </div>
-                            <button (click)="changeBannerImage()" class="flex items-center gap-2 px-3 py-1.5 border border-blue-200 text-blue-600 rounded-md text-xs hover:bg-blue-50 bg-white mr-auto">
+                            <button (click)="changeBannerImage()" class="flex items-center gap-2 px-3 py-1.5 border border-forest/30 text-forest rounded-md text-xs hover:bg-forest-light bg-white mr-auto">
                                 <lucide-icon [img]="Edit2" size="14"></lucide-icon><span>{{ 'DASHBOARD.AUTO_STR_432' | translate }}</span>
                             </button>
                         </div>

@@ -7,7 +7,7 @@
   min-height: 100vh;
   color: #17191d;
   font-family: 'Cairo', Tahoma, Arial, sans-serif;
-  background: #f7fbfc;
+  background: #f8fbfa;
 }
 .lk-admin-login__mark {
     width: 210px;
@@ -39,7 +39,7 @@
 }
 
 .lk-admin-login__top span {
-  color: #115C6B;
+  color: #26563e;
   font-weight: 800;
 }
 
@@ -59,7 +59,7 @@
   height: 78px;
   margin: 0 auto 18px;
   place-items: center;
-  color: #115C6B;
+  color: #26563e;
   font-size: 20px;
   font-weight: 800;
   background: transparent;
@@ -79,11 +79,11 @@
   gap: 9px;
   margin-bottom: 14px;
   padding: 0 14px;
-  color: #115C6B;
+  color: #26563e;
   background: #fff;
-  border: 1.5px solid #115C6B;
+  border: 1.5px solid #26563e;
   border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(17, 92, 107, 0.08);
+  box-shadow: 0 2px 8px rgba(38, 86, 62, 0.08);
 }
 
 .lk-admin-login__field input {
@@ -101,7 +101,7 @@
 .lk-admin-login__eye {
   display: grid;
   padding: 0;
-  color: #115C6B;
+  color: #26563e;
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -116,10 +116,10 @@
   font-family: inherit;
   font-size: 14px;
   font-weight: 700;
-  background: linear-gradient(135deg, #115C6B 0%, #0D4955 100%);
+  background: linear-gradient(135deg, #26563e 0%, #1e4431 100%);
   border: 0;
   border-radius: 999px;
-  box-shadow: 0 5px 15px rgba(17, 92, 107, 0.28);
+  box-shadow: 0 5px 15px rgba(38, 86, 62, 0.28);
   cursor: pointer;
 }
 

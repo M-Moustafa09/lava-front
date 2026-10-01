@@ -14,7 +14,7 @@
         <!-- Optional Add Button -->
         @if (addAction) {
             <div class="ml-3">
-                <button (click)="addAction.onClick()" class="text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1.5 rounded-md font-medium transition-colors border border-blue-100">{{ addAction.label | translate }}</button>
+                <button (click)="addAction.onClick()" class="text-xs bg-forest-light text-forest hover:bg-forest-light px-3 py-1.5 rounded-md font-medium transition-colors border border-forest-light">{{ addAction.label | translate }}</button>
             </div>
         }
         
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Copy/Delete -->
-        <button (click)="duplicate.emit()" class="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors ml-1" [title]="'DASHBOARD.AUTO_STR_423' | translate">
+        <button (click)="duplicate.emit()" class="p-1.5 text-gray-400 hover:text-forest hover:bg-forest-light rounded-md transition-colors ml-1" [title]="'DASHBOARD.AUTO_STR_423' | translate">
             <lucide-icon [img]="Copy" size="16"></lucide-icon>
         </button>
         <button (click)="delete.emit()" class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors ml-2" [title]="'COMMON.DELETE' | translate">
@@ -46,7 +46,7 @@
                   [checked]="enabled"
                   (change)="onToggle($event)"
               />
-              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-forest"></div>
           </label>
         }
     </div>

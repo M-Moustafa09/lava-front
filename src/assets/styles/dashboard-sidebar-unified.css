@@ -51,7 +51,7 @@
 .dashboard-sidebar__nav button.dashboard-sidebar__nav-row:hover,
 .dashboard-sidebar__nav-row.is-active {
   padding-right: 15px !important;
-  background: #f7fbfc !important;
+  background: #f8fbfa !important;
   color: #252b2f !important;
 }
 
@@ -61,7 +61,7 @@
 
 .dashboard-sidebar__nav-main > svg,
 .dashboard-sidebar__nav-row > svg {
-  color: #13aa9d !important;
+  color: #234e38 !important;
   stroke-width: 1.9 !important;
 }
 

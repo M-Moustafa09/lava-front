@@ -125,22 +125,22 @@
   border: 1.5px solid var(--lk-admin-catalog-border);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 8px 22px rgba(35, 88, 106, .07);
+  box-shadow: 0 8px 22px rgba(44, 97, 71, .07);
   transition: transform .18s ease, box-shadow .18s ease;
 }
 
 .lk-admin-catalog-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(35, 88, 106, .12);
+  box-shadow: 0 14px 30px rgba(44, 97, 71, .12);
 }
 
 .lk-admin-catalog-card__image {
   height: 190px;
-  background: #f5fbfd;
+  background: #f7fbf9;
   display: grid;
   place-items: center;
   overflow: hidden;
-  border-bottom: 1px solid #dff0f5;
+  border-bottom: 1px solid #e4f0ea;
 }
 
 .lk-admin-catalog-card__image img {
@@ -282,7 +282,7 @@
   border: 1.5px solid var(--lk-admin-catalog-border);
   border-radius: 22px;
   padding: clamp(18px, 4vw, 30px);
-  box-shadow: 0 14px 34px rgba(35, 88, 106, .09);
+  box-shadow: 0 14px 34px rgba(44, 97, 71, .09);
 }
 
 .lk-admin-catalog-form-grid {
@@ -311,7 +311,7 @@
   width: 100%;
   border: 1px solid #d6e5eb;
   border-radius: 13px;
-  background: #fbfdfe;
+  background: #fcfdfd;
   padding: 0 14px;
   outline: none;
   color: inherit;
@@ -338,7 +338,7 @@
   min-height: 250px;
   border: 1.5px dashed var(--lk-admin-catalog-border);
   border-radius: 18px;
-  background: #f8fdff;
+  background: #fbfcfb;
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -349,7 +349,7 @@
 .lk-admin-catalog-image-picker:hover,
 .lk-admin-catalog-image-picker:focus-visible {
   border-color: var(--lk-admin-catalog-brand);
-  background: #f0fbff;
+  background: #f5faf8;
   box-shadow: 0 0 0 4px rgba(42, 88, 65, .11);
 }
 
@@ -411,9 +411,9 @@
   align-items: center;
   gap: 7px;
   direction: ltr;
-  color: #237f9e;
+  color: #24503a;
   background: white;
-  border: 1px solid #c8eaf4;
+  border: 1px solid #d5e7de;
   font-size: 12px;
   font-weight: 900;
   box-shadow: 0 6px 16px rgba(42, 88, 65, .08);
@@ -486,7 +486,7 @@
 }
 
 .lk-admin-catalog-modal::-webkit-scrollbar-thumb {
-  background: #addfed;
+  background: #bfdbcd;
   border-radius: 999px;
 }
 
@@ -724,7 +724,7 @@
   resize: vertical;
   border: 1px solid #d6e5eb;
   border-radius: 13px;
-  background: #fbfdfe;
+  background: #fcfdfd;
   padding: 13px 14px;
   outline: none;
   color: inherit;
@@ -744,10 +744,10 @@
   gap: 7px;
   margin-top: 8px;
   padding: 0 10px;
-  border: 1px solid #bfe6f1;
+  border: 1px solid #cde3d8;
   border-radius: 999px;
-  background: #eefaff;
-  color: #218faf;
+  background: #f4f9f7;
+  color: #295b42;
   font-size: 12px;
   font-weight: 800;
 }

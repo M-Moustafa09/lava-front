@@ -80,12 +80,12 @@ import { getEnglishTranslation } from '../../../../core/utils/config-sanitizer';
                         <div class="grid grid-cols-2 gap-2" dir="rtl">
                             <div>
                                 <span class="text-[10px] font-bold text-gray-500 mb-1 block text-right">الكلمة المميزة (عربي)</span>
-                                <input type="text" dir="rtl" class="w-full text-sm font-bold bg-white border border-gray-200 rounded-md px-2 py-1 text-blue-600 text-right" 
+                                <input type="text" dir="rtl" class="w-full text-sm font-bold bg-white border border-gray-200 rounded-md px-2 py-1 text-forest text-right" 
                                        [ngModel]="cat.accentAr" (ngModelChange)="updateCategory(idx, { accentAr: $event })" />
                             </div>
                             <div>
                                 <span class="text-[10px] font-bold text-gray-500 mb-1 block text-left">Accent (EN)</span>
-                                <input type="text" dir="ltr" class="w-full text-sm font-bold bg-white border border-gray-200 rounded-md px-2 py-1 text-blue-600 text-left" 
+                                <input type="text" dir="ltr" class="w-full text-sm font-bold bg-white border border-gray-200 rounded-md px-2 py-1 text-forest text-left" 
                                        [ngModel]="cat.accentEn" (ngModelChange)="updateCategory(idx, { accentEn: $event })" />
                             </div>
                         </div>
