@@ -14,6 +14,7 @@ import {
   CountryPrice,
   CrmProduct,
   ProductFormValue,
+  SizeCode,
   StoreCountry
 } from '../../../core/services/products/admin-products.service';
 
@@ -50,6 +51,9 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
 
   /** Bound to the «اختر دولة» picker; reset after each pick. */
   countryToAdd = '';
+
+  /** Bound to the new-size field. */
+  sizeToAdd = '';
 
   readonly isLoading = signal(true);
   readonly isSaving = signal(false);
@@ -163,7 +167,8 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
       basePrice: product.internationalPrice,
       internationalOriginalPrice: product.internationalOriginalPrice,
       countryPrices: product.countryPrices.map(cp => ({ ...cp })),
-      productCode: product.productCode
+      productCode: product.productCode,
+      sizes: product.sizes.map(s => ({ ...s }))
     };
     this.formError.set('');
     this.selectedCrm.set(null);
@@ -381,6 +386,56 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  // ── Sizes and their CRM codes ─────────────────────────────────────────────────────────
+  // Every size is its own CRM product with its own code (owner decision 2026-10-01), so an order line
+  // ships under the code of the size the customer chose. A size with no code falls back to the
+  // product's code above.
+
+  addSize(): void {
+    const size = this.sizeToAdd.trim();
+    if (!size) return;
+    if (this.form.sizes.some(s => s.size.toLowerCase() === size.toLowerCase())) {
+      this.toast.show(`المقاس «${size}» موجود بالفعل`, 'warning');
+      return;
+    }
+    this.form.sizes = [...this.form.sizes, { size, productCode: '' }];
+    this.sizeToAdd = '';
+  }
+
+  removeSize(row: SizeCode): void {
+    this.form.sizes = this.form.sizes.filter(s => s !== row);
+  }
+
+  moveSize(index: number, delta: number): void {
+    const target = index + delta;
+    if (target < 0 || target >= this.form.sizes.length) return;
+    const next = [...this.form.sizes];
+    [next[index], next[target]] = [next[target], next[index]];
+    this.form.sizes = next;
+  }
+
+  /**
+   * The CRM products a size may take: not linked to another store product, and not already used
+   * by another size or by the product itself in this form. The size's own code stays offered.
+   */
+  crmOptionsFor(row: SizeCode): CrmProduct[] {
+    const editingId = this.editing()?.id ?? null;
+    const usedHere = new Set(
+      [this.selectedCrm()?.productCode ?? '', ...this.form.sizes.filter(s => s !== row).map(s => s.productCode)]
+        .filter(Boolean)
+        .map(c => c.toLowerCase())
+    );
+    return this.crmProducts().filter(c =>
+      c.productCode.toLowerCase() === row.productCode.toLowerCase() ||
+      ((!c.linkedProductId || c.linkedProductId === editingId) && !usedHere.has(c.productCode.toLowerCase()))
+    );
+  }
+
+  crmNameOf(code: string): string {
+    if (!code) return '';
+    return this.crmProducts().find(c => c.productCode.toLowerCase() === code.toLowerCase())?.name ?? '';
+  }
+
   // ── Per-country prices ────────────────────────────────────────────────────────────────
 
   /** Countries not priced yet in this form — what the picker still offers. */
@@ -449,6 +504,10 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
     if (this.form.internationalOriginalPrice && !(intlOriginal > intl)) {
       return 'السعر الدولي قبل الخصم يجب أن يكون أكبر من السعر';
     }
+    const codes = [this.selectedCrm()?.productCode ?? '', ...this.form.sizes.map(s => s.productCode)]
+      .filter(Boolean)
+      .map(c => c.toLowerCase());
+    if (new Set(codes).size !== codes.length) return 'كل مقاس يحتاج كود لوكسيرا مختلفاً عن بقية المقاسات والمنتج';
     for (const row of this.form.countryPrices) {
       const name = this.countryOf(row.countryId)?.nameAr ?? 'الدولة';
       const price = Number(row.price);
@@ -470,7 +529,8 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
       basePrice: null,
       internationalOriginalPrice: null,
       countryPrices: [],
-      productCode: null
+      productCode: null,
+      sizes: []
     };
   }
 }

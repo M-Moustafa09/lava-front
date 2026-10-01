@@ -77,7 +77,7 @@ export class OrderRepositoryImpl implements IOrderRepository {
                 productId: i.productId,
                 name: i.productNameAr || i.productNameEn || '',
                 image: i.productImage || '/assets/home/product-1.png',
-                size: '',
+                size: i.size || '',
                 color: '',
                 quantity: i.quantity,
                 unitPrice: i.unitPrice ?? i.value ?? 0
@@ -140,10 +140,15 @@ export class OrderRepositoryImpl implements IOrderRepository {
         address: order.address,
         phone: order.phone,
         notes: order.notes,
+        // The CRM picks the courier from the city, so it must reach the order.
+        city: order.city || null,
+        area: order.area || null,
         paymentMethod: isBank ? 2 : 1, // 1: COD, 2: BankTransfer
         items: (order.items && order.items.length > 0 ? order.items : [{ productId: DEFAULT_PRODUCT_ID, quantity: 1 }]).map(i => ({
           productId: isGuid(i.productId) ? i.productId : DEFAULT_PRODUCT_ID,
-          quantity: i.quantity || 1
+          quantity: i.quantity || 1,
+          // The chosen size picks the CRM code the line is synced with (each size is its own CRM product).
+          size: (i as any).size || null
         })),
         guestName: order.customerName,
         guestCountryName: order.country,
@@ -209,7 +214,7 @@ export class OrderRepositoryImpl implements IOrderRepository {
           deliveryCompany: updates.deliveryCompany ?? null,
           notes: updates.notes ?? null,
           paymentMethod: paymentMethod ?? null,
-          items: updates.items ? updates.items.map(i => ({ productId: i.productId, quantity: i.quantity })) : null
+          items: updates.items ? updates.items.map(i => ({ productId: i.productId, quantity: i.quantity, size: i.size || null })) : null
         }));
       }
 

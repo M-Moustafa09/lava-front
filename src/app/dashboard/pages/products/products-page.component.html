@@ -169,6 +169,39 @@
           <small class="lk-products-hint">{{ 'ADMIN_PRODUCTS.CRM_HINT' | translate }}</small>
         </div>
 
+        <!-- Sizes (owner decision 2026-10-01): each size is its own CRM product, so it carries its own
+             code and an order line ships under the code of the size the customer chose. -->
+        <div class="lk-products-field lk-products-sizes">
+          <span>{{ 'ADMIN_PRODUCTS.FIELD_SIZES' | translate }}</span>
+          <small class="lk-products-hint">{{ 'ADMIN_PRODUCTS.SIZES_HINT' | translate }}</small>
+
+          <div class="lk-products-size-row" *ngFor="let row of form.sizes; let i = index">
+            <strong dir="ltr">{{ row.size }}</strong>
+
+            <select *ngIf="!crmLoading() && !crmError(); else sizeCodeText" [(ngModel)]="row.productCode" [name]="'sizeCode' + i">
+              <option value="">{{ 'ADMIN_PRODUCTS.SIZE_NO_CODE' | translate }}</option>
+              <option *ngFor="let item of crmOptionsFor(row)" [value]="item.productCode">{{ item.productCode }} — {{ item.name }}</option>
+            </select>
+            <ng-template #sizeCodeText>
+              <span class="lk-products-code" dir="ltr">{{ row.productCode || '—' }}</span>
+            </ng-template>
+
+            <div class="lk-products-size-actions">
+              <button type="button" (click)="moveSize(i, -1)" [disabled]="i === 0" [attr.aria-label]="'ADMIN_PRODUCTS.SIZE_UP' | translate">↑</button>
+              <button type="button" (click)="moveSize(i, 1)" [disabled]="i === form.sizes.length - 1" [attr.aria-label]="'ADMIN_PRODUCTS.SIZE_DOWN' | translate">↓</button>
+              <button type="button" class="lk-products-country-remove" (click)="removeSize(row)" [attr.aria-label]="'ADMIN_PRODUCTS.REMOVE_SIZE' | translate">
+                <lucide-icon [img]="XIcon" [size]="14"></lucide-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="lk-products-size-add">
+            <input type="text" name="sizeToAdd" [(ngModel)]="sizeToAdd" (keydown.enter)="$event.preventDefault(); addSize()"
+                   dir="ltr" maxlength="20" [placeholder]="'ADMIN_PRODUCTS.SIZE_PLACEHOLDER' | translate" />
+            <button type="button" (click)="addSize()" [disabled]="!sizeToAdd.trim()">{{ 'ADMIN_PRODUCTS.ADD_SIZE' | translate }}</button>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <label class="lk-products-field">
             <span>{{ 'ADMIN_PRODUCTS.FIELD_NAME_AR' | translate }}</span>

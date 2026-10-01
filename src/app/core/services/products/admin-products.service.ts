@@ -32,6 +32,14 @@ export interface AdminProduct {
   internationalPrice: number | null;
   internationalOriginalPrice: number | null;
   countryPrices: CountryPrice[];
+  /** The sizes the product is sold in, each with its CRM code (each size is its own CRM product). */
+  sizes: SizeCode[];
+}
+
+/** One size of a product and its CRM code; '' = no code of its own (falls back to the product's). */
+export interface SizeCode {
+  size: string;
+  productCode: string;
 }
 
 /** A product's price in one of the store's countries, in that country's currency. */
@@ -92,6 +100,7 @@ export interface ProductFormValue {
   internationalOriginalPrice: number | null;
   countryPrices: CountryPrice[];
   productCode: string | null;
+  sizes: SizeCode[];
 }
 
 /** The API wraps every payload in `{ success, message, data }`. */
@@ -194,7 +203,8 @@ export class AdminProductsService {
       basePrice: form.basePrice,
       productCode: form.productCode,
       internationalOriginalPrice: form.internationalOriginalPrice,
-      countryPrices: this.toCountryPricesPayload(form.countryPrices)
+      countryPrices: this.toCountryPricesPayload(form.countryPrices),
+      sizes: this.toSizesPayload(form.sizes)
     });
   }
 
@@ -215,7 +225,8 @@ export class AdminProductsService {
       basePrice: form.basePrice,
       productCode: form.productCode,
       internationalOriginalPrice: form.internationalOriginalPrice,
-      countryPrices: this.toCountryPricesPayload(form.countryPrices)
+      countryPrices: this.toCountryPricesPayload(form.countryPrices),
+      sizes: this.toSizesPayload(form.sizes)
     });
   }
 
@@ -259,8 +270,22 @@ export class AdminProductsService {
         countryId: cp.countryId,
         price: cp.price ?? null,
         originalPrice: cp.originalPrice ?? null
-      }))
+      })),
+      sizes: this.toSizes(row)
     };
+  }
+
+  /** The product's sizes in their order, each with its CRM code when it has one. */
+  private toSizes(row: any): SizeCode[] {
+    const codes: any[] = Array.isArray(row.sizeCodes) ? row.sizeCodes : [];
+    return (Array.isArray(row.sizes) ? row.sizes : []).map((size: string) => ({
+      size,
+      productCode: codes.find(c => (c.size ?? '').toLowerCase() === size.toLowerCase())?.productCode ?? ''
+    }));
+  }
+
+  private toSizesPayload(rows: SizeCode[]) {
+    return rows.map(r => ({ size: r.size.trim(), productCode: r.productCode.trim() || null }));
   }
 
   /** The API replaces the whole set on save; rows are validated by the form before this. */

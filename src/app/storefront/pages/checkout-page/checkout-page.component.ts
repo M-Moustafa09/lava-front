@@ -214,6 +214,7 @@ export class CheckoutPageComponent implements OnInit {
         productId: i.cartItem?.productId || i.cartItem?.product?.id || i.cartItem?.id || '00000000-0000-0000-0000-000000000000',
         quantity: i.quantity || i.cartItem?.quantity || 1,
         unitPrice: i.price || i.cartItem?.price || 0,
+        size: i.cartItem?.size || '',
       })),
       subtotal: this.subtotal(),
       shipping: this.shipping(),

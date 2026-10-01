@@ -592,3 +592,71 @@
     grid-column: 1 / -1;
   }
 }
+
+/* Sizes and their CRM codes: one row per size — the size, its code, then order and remove. */
+.lk-products-size-row {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid #e3ebe6;
+  border-radius: 10px;
+  background: #f8fbfa;
+}
+
+.lk-products-size-row strong {
+  font-size: 14px;
+  color: #2a5841;
+  text-align: center;
+}
+
+.lk-products-size-row select {
+  min-width: 0;
+}
+
+.lk-products-size-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lk-products-size-actions button:not(.lk-products-country-remove) {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #c9d8cf;
+  border-radius: 8px;
+  background: #fff;
+  color: #2a5841;
+  cursor: pointer;
+}
+
+.lk-products-size-actions button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.lk-products-size-add {
+  display: flex;
+  gap: 8px;
+}
+
+.lk-products-size-add input {
+  flex: 1;
+  min-width: 0;
+}
+
+.lk-products-size-add button {
+  padding: 0 14px;
+  border: 0;
+  border-radius: 10px;
+  background: #2a5841;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lk-products-size-add button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

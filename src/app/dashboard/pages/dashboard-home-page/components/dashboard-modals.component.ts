@@ -231,6 +231,10 @@ import { Product, TrackedOrder, TrackedOrderItem, TrackedOrderStatus, BankTransf
               <div class="dashboard-edit-items__row" *ngFor="let item of rowProductDraft; let i = index">
                 <img [src]="item.image" [alt]="item.name" />
                 <span class="dashboard-edit-items__name">{{ item.name }}</span>
+                <select class="dashboard-edit-items__size" *ngIf="sizesOf(item.productId).length" [(ngModel)]="item.size" aria-label="المقاس">
+                  <option value="">بدون مقاس</option>
+                  <option *ngFor="let s of sizesOf(item.productId)" [value]="s">{{ s }}</option>
+                </select>
                 <div class="dashboard-edit-items__qty">
                   <button type="button" (click)="changeDraftQuantity(i, -1)" [disabled]="item.quantity <= 1" aria-label="تقليل الكمية">−</button>
                   <span class="dashboard-number">{{ item.quantity }}</span>
@@ -243,7 +247,11 @@ import { Product, TrackedOrder, TrackedOrderItem, TrackedOrderStatus, BankTransf
                   <option value="">اختر منتجاً لإضافته</option>
                   <option *ngFor="let p of products" [value]="p.id">{{ p.nameAr || p.nameEn }}</option>
                 </select>
-                <button type="button" (click)="addDraftItem()" [disabled]="!productToAdd">إضافة</button>
+                <select *ngIf="sizesOf(productToAdd).length" [(ngModel)]="sizeToAdd" aria-label="مقاس المنتج المضاف">
+                  <option value="">المقاس</option>
+                  <option *ngFor="let s of sizesOf(productToAdd)" [value]="s">{{ s }}</option>
+                </select>
+                <button type="button" (click)="addDraftItem()" [disabled]="!productToAdd || (sizesOf(productToAdd).length > 0 && !sizeToAdd)">إضافة</button>
               </div>
               <small class="dashboard-edit-items__hint">سعر المنتج الجديد يُحسب من سعر دولة الطلب عند الحفظ.</small>
             </div>
@@ -737,6 +745,18 @@ import { Product, TrackedOrder, TrackedOrderItem, TrackedOrderStatus, BankTransf
     .dashboard-edit-items__add select {
       flex: 1;
     }
+    /* Outranks .dashboard-edit-form select (width: 100%), which would push the name out of the row. */
+    .dashboard-edit-items .dashboard-edit-items__add select + select,
+    .dashboard-edit-items select.dashboard-edit-items__size {
+      flex: 0 0 auto;
+      width: 96px;
+      height: 30px;
+      padding: 0 6px;
+      border: 1px solid #c9d8cf;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 12px;
+    }
     .dashboard-edit-items__hint {
       font-size: 11px;
       color: #5d7075;
@@ -783,6 +803,13 @@ export class DashboardModalsComponent {
   }
 
   productToAdd = '';
+  sizeToAdd = '';
+
+  /** The sizes a product is sold in; each size is its own CRM product, so a line keeps its size. */
+  sizesOf(productId: string): string[] {
+    if (!productId) return [];
+    return this.products.find(p => p.id.toLowerCase() === productId.toLowerCase())?.sizes ?? [];
+  }
 
   changeDraftQuantity(index: number, delta: number): void {
     const item = this.rowProductDraft[index];
@@ -795,11 +822,13 @@ export class DashboardModalsComponent {
     this.rowProductDraft.splice(index, 1);
   }
 
-  /** Adding a product already on the order raises its quantity instead of repeating the line. */
+  /** Adding a product and size already on the order raises its quantity instead of repeating the line. */
   addDraftItem(): void {
     const product = this.products.find(p => p.id === this.productToAdd);
     if (!product) return;
-    const existing = this.rowProductDraft.find(i => i.productId.toLowerCase() === product.id.toLowerCase());
+    const size = this.sizeToAdd;
+    const existing = this.rowProductDraft.find(i =>
+      i.productId.toLowerCase() === product.id.toLowerCase() && (i.size || '') === size);
     if (existing) {
       existing.quantity += 1;
     } else {
@@ -807,13 +836,14 @@ export class DashboardModalsComponent {
         productId: product.id,
         name: product.nameAr || product.nameEn,
         image: product.images?.[0] || '/assets/home/product-1.png',
-        size: '',
+        size,
         color: '',
         quantity: 1,
         unitPrice: product.price,
       });
     }
     this.productToAdd = '';
+    this.sizeToAdd = '';
   }
 
   get filteredCatalogProducts(): Product[] {
