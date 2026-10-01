@@ -59,6 +59,7 @@ export interface TrackedOrder {
   shipping: number;
   discount: number;
   total: number;
+  currency?: string;
   customerName: string;
   phone: string;
   city: string;

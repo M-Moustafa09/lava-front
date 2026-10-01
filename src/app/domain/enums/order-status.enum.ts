@@ -5,7 +5,8 @@ export type OrderStatus =
   | 'shipped'
   | 'out-for-delivery'
   | 'delivered'
-  | 'postponed';
+  | 'postponed'
+  | 'cancelled';
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   'pending-approval': 'قيد الاعتماد',
@@ -15,6 +16,7 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   'out-for-delivery': 'قيد التوصيل',
   delivered: 'تم التسليم',
   postponed: 'طلب مؤجل',
+  cancelled: 'ملغي',
 };
 
 export const ORDER_STATUS_CLASSES: Record<OrderStatus, string> = {
@@ -25,4 +27,5 @@ export const ORDER_STATUS_CLASSES: Record<OrderStatus, string> = {
   'out-for-delivery': 'dashboard-status dashboard-status--shipping',
   delivered: 'dashboard-status dashboard-status--delivered',
   postponed: 'dashboard-status dashboard-status--postponed',
+  cancelled: 'dashboard-status dashboard-status--failed',
 };

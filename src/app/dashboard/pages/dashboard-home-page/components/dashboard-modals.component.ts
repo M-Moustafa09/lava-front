@@ -64,7 +64,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
                       </span>
                     </div>
                     <p class="customer-info">العميل: <strong>{{ order.customerName }}</strong> · الهاتف: {{ order.phone }}</p>
-                    <p class="amount-info">المبلغ: <span class="price-highlight">{{ order.total }} SAR</span></p>
+                    <p class="amount-info">المبلغ: <span class="price-highlight">{{ order.total }} {{ order.currency || 'SAR' }}</span></p>
                   </div>
 
                   <div class="receipt-preview-box" *ngIf="order.bankTransferReceipt?.dataUrl">
@@ -148,6 +148,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
             <option value="out-for-delivery">{{ 'DASHBOARD.AUTO_STR_307' | translate }}</option>
             <option value="delivered">{{ 'DASHBOARD.AUTO_STR_341' | translate }}</option>
             <option value="postponed">{{ 'DASHBOARD.AUTO_STR_382' | translate }}</option>
+            <option value="cancelled">ملغي</option>
           </select>
         </div>
         <footer class="dashboard-modal__footer">
@@ -236,6 +237,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
                 <option value="out-for-delivery">{{ 'DASHBOARD.AUTO_STR_307' | translate }}</option>
                 <option value="delivered">{{ 'DASHBOARD.AUTO_STR_341' | translate }}</option>
                 <option value="postponed">{{ 'DASHBOARD.AUTO_STR_382' | translate }}</option>
+            <option value="cancelled">ملغي</option>
               </select>
             </label>
           </div>

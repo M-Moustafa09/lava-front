@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { Observable, of, concat, forkJoin } from 'rxjs';
+import { map, switchMap, catchError, toArray } from 'rxjs/operators';
 import { IOrderRepository } from '../../domain/interfaces/order.repository';
 import { TrackedOrder, TrackedOrderStatus, TrackedOrderStatusUpdater } from '../../domain/models/order.model';
 import { SEED_TRACKED_ORDERS } from '../mock/seed-orders.mock';
@@ -9,6 +9,33 @@ import { environment } from '../../../environments/environment';
 import { ContextService } from '../../core/services/context/context.service';
 
 const STORAGE_KEY = `${environment.storagePrefix}completed-orders`;
+const ORDERS_PAGE_SIZE = 100;
+
+/** Backend `OrderStatus` enum values, sent as numbers because the API reads enums numerically. */
+const BACKEND_ORDER_STATUS: Record<TrackedOrderStatus, number> = {
+  confirmed: 0,          // NewOrder
+  'pending-approval': 1, // PendingApproval
+  preparing: 2,          // Prepared
+  shipped: 3,            // Shipping
+  'out-for-delivery': 3, // Shipping
+  delivered: 4,          // Delivered
+  cancelled: 5,          // Cancelled
+  postponed: 6,          // Incomplete
+};
+
+const BACKEND_PAYMENT_STATUS = { Pending: 0, Paid: 2 } as const;
+
+function toFrontStatus(status: string): TrackedOrderStatus {
+  switch (status) {
+    case 'PendingApproval': return 'pending-approval';
+    case 'Prepared': return 'preparing';
+    case 'Shipping': return 'out-for-delivery';
+    case 'Delivered': return 'delivered';
+    case 'Cancelled': return 'cancelled';
+    case 'Incomplete': return 'postponed';
+    default: return 'confirmed';
+  }
+}
 
 @Injectable({
   providedIn: 'root',
@@ -19,28 +46,34 @@ export class OrderRepositoryImpl implements IOrderRepository {
 
   getOrders(): Observable<TrackedOrder[]> {
     if (!environment.useMockData) {
-      return this.http.get<any>(`${environment.apiBaseUrl}/orders`).pipe(
-        map(res => {
-          const items = res?.data?.data || res?.data || [];
+      return this.fetchAllOrderPages().pipe(
+        map(items => {
           return items.map((o: any) => {
             const isBank = o.paymentMethod === 'BankTransfer' || o.paymentMethod === 2 || o.paymentMethod === 'تحويل بنكي' || o.paymentMethod === 'CHECKOUT.BANK_TRANSFER';
             let receiptUrl = o.proofImageUrl || o.bankTransferReceiptUrl || (o.bankTransfers && o.bankTransfers.length > 0 ? o.bankTransfers[0].proofImageUrl : undefined);
             return {
               id: o.id,
               orderNumber: o.orderNumber || o.id.split('-')[0].toUpperCase(),
+              shipmentCode: o.shipmentCode || undefined,
               createdAt: o.createdAt,
               updatedAt: o.createdAt,
-              status: o.status,
-              paymentStatus: o.paymentStatus === 'Paid' ? 'paid' : (isBank ? 'unpaid' : (o.paymentMethod === 'CashOnDelivery' ? 'unpaid' : 'paid')),
+              status: toFrontStatus(o.status),
+              paymentStatus: o.paymentStatus === 'Paid' ? 'paid' : 'unpaid',
+              notes: o.notes || undefined,
               items: (o.items || []).map((i: any) => ({
                 productId: i.productId,
+                name: i.productNameAr || i.productNameEn || '',
+                image: i.productImage || '/assets/home/product-1.png',
+                size: '',
+                color: '',
                 quantity: i.quantity,
-                unitPrice: i.value || i.unitPrice || 0
+                unitPrice: i.unitPrice ?? i.value ?? 0
               })),
               subtotal: o.total || o.totalAmount || 0,
               shipping: 0,
               discount: 0,
               total: o.total || o.totalAmount || 0,
+              currency: o.currency || undefined,
               customerName: o.customerName || 'Guest',
               phone: o.phone || '',
               city: o.city || o.country || '',
@@ -141,7 +174,26 @@ export class OrderRepositoryImpl implements IOrderRepository {
 
   updateOrder(id: string, updates: Partial<TrackedOrder>): Observable<TrackedOrder> {
     if (!environment.useMockData) {
-      return this.http.patch<TrackedOrder>(`${environment.apiBaseUrl}/orders/${id}`, updates);
+      const requests: Observable<unknown>[] = [];
+
+      const statusBody: Record<string, number> = {};
+      if (updates.status) statusBody['status'] = BACKEND_ORDER_STATUS[updates.status];
+      if (updates.paymentStatus) statusBody['paymentStatus'] = updates.paymentStatus === 'paid' ? BACKEND_PAYMENT_STATUS.Paid : BACKEND_PAYMENT_STATUS.Pending;
+      if (Object.keys(statusBody).length > 0) {
+        requests.push(this.http.patch(`${environment.apiBaseUrl}/orders/${id}`, statusBody));
+      }
+
+      if (updates.customerName !== undefined || updates.phone !== undefined || updates.address !== undefined) {
+        requests.push(this.http.put(`${environment.apiBaseUrl}/orders/${id}`, {
+          customerName: updates.customerName ?? '',
+          phone: updates.phone ?? '',
+          address: updates.address ?? '',
+          shipmentCode: updates.shipmentCode ?? ''
+        }));
+      }
+
+      if (requests.length === 0) return of(updates as TrackedOrder);
+      return concat(...requests).pipe(toArray(), map(() => updates as TrackedOrder));
     }
     return this.getOrders().pipe(
       map(orders => {
@@ -174,7 +226,10 @@ export class OrderRepositoryImpl implements IOrderRepository {
 
   bulkUpdateStatus(ids: string[], status: TrackedOrderStatus, updatedBy?: TrackedOrderStatusUpdater): Observable<boolean> {
     if (!environment.useMockData) {
-      return this.http.post<{ success: boolean }>(`${environment.apiBaseUrl}/orders/bulk-status`, { ids, status, updatedBy }).pipe(map(res => res.success));
+      return this.http.post<{ success: boolean }>(`${environment.apiBaseUrl}/orders/bulk-status`, {
+        orderIds: ids,
+        newStatus: BACKEND_ORDER_STATUS[status]
+      }).pipe(map(res => res.success));
     }
     return this.getOrders().pipe(
       map(orders => {
@@ -192,6 +247,22 @@ export class OrderRepositoryImpl implements IOrderRepository {
         });
         this.saveLocal(next);
         return true;
+      })
+    );
+  }
+
+  /** The orders endpoint is paged; the dashboard filters and paginates on its own, so it gets every page. */
+  private fetchAllOrderPages(): Observable<any[]> {
+    const url = `${environment.apiBaseUrl}/orders`;
+    return this.http.get<any>(url, { params: { page: 1, pageSize: ORDERS_PAGE_SIZE } }).pipe(
+      switchMap(res => {
+        const first = res?.data?.data || [];
+        const totalPages = res?.data?.totalPages || 1;
+        if (totalPages <= 1) return of(first);
+        const rest = Array.from({ length: totalPages - 1 }, (_, i) =>
+          this.http.get<any>(url, { params: { page: i + 2, pageSize: ORDERS_PAGE_SIZE } }).pipe(map(r => r?.data?.data || []))
+        );
+        return forkJoin(rest).pipe(map(pages => first.concat(...pages)));
       })
     );
   }

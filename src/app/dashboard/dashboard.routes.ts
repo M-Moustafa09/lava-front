@@ -13,8 +13,8 @@ export const DASHBOARD_ROUTES: Routes = [
   },
   {
     path: 'orders',
-    redirectTo: 'store-customizer',
-    pathMatch: 'full'
+    canActivate: [dashboardGuard],
+    loadComponent: () => import('./pages/dashboard-home-page/dashboard-home-page.component').then(m => m.DashboardHomePageComponent)
   },
   {
     path: 'dashboard',

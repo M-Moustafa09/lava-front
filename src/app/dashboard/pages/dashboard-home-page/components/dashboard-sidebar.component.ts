@@ -31,7 +31,7 @@ import { StaffAccount } from '../../../../shared/interfaces';
         </div>
 
         <nav class="dashboard-sidebar__nav">
-          <button type="button" class="dashboard-sidebar__nav-row is-active" (click)="navigate.emit('/admin')">
+          <button type="button" class="dashboard-sidebar__nav-row is-active" (click)="navigate.emit('/admin/orders')">
             <span class="dashboard-sidebar__nav-main">
               <lucide-icon [img]="LayoutDashboardIcon" [size]="17"></lucide-icon>
               <span>{{ 'DASHBOARD.AUTO_STR_175' | translate }}</span>

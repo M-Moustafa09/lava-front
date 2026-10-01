@@ -174,7 +174,7 @@ import { buildWhatsAppUrl } from '../../../../shared/utils/phone.utils';
                   <td>
                     <div class="dashboard-amount">
                       <span class="dashboard-amount__main">
-                        <span class="dashboard-number">{{ order.total }} SAR</span>
+                        <span class="dashboard-number">{{ order.total }} {{ order.currency || 'SAR' }}</span>
                       </span>
                       <span class="dashboard-amount__badge">
                         <span class="dashboard-number">{{ (order.items && order.items.length > 0) ? order.items[0].quantity : 1 }}x PCS</span>
