@@ -3,7 +3,7 @@ import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, X } from 'lucide-angular';
-import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '../../../../shared/interfaces';
+import { Product, TrackedOrder, TrackedOrderItem, TrackedOrderStatus, BankTransferReceipt } from '../../../../shared/interfaces';
 
 @Component({
   selector: 'app-dashboard-modals',
@@ -188,7 +188,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
             <div class="form-row">
               <label>
                 <span>{{ 'CHECKOUT.COUNTRY' | translate }}</span>
-                <input type="text" [(ngModel)]="rowEditDraft.country" />
+                <input type="text" [ngModel]="rowEditDraft.country" readonly />
               </label>
               <label>
                 <span>{{ 'CHECKOUT.CITY' | translate }}</span>
@@ -225,6 +225,28 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
                 <textarea [(ngModel)]="rowEditDraft.notes" rows="2"></textarea>
               </label>
             </div>
+
+            <div class="dashboard-edit-items">
+              <span class="dashboard-edit-items__title">منتجات الطلب</span>
+              <div class="dashboard-edit-items__row" *ngFor="let item of rowProductDraft; let i = index">
+                <img [src]="item.image" [alt]="item.name" />
+                <span class="dashboard-edit-items__name">{{ item.name }}</span>
+                <div class="dashboard-edit-items__qty">
+                  <button type="button" (click)="changeDraftQuantity(i, -1)" [disabled]="item.quantity <= 1" aria-label="تقليل الكمية">−</button>
+                  <span class="dashboard-number">{{ item.quantity }}</span>
+                  <button type="button" (click)="changeDraftQuantity(i, 1)" aria-label="زيادة الكمية">+</button>
+                </div>
+                <button type="button" class="dashboard-edit-items__remove" (click)="removeDraftItem(i)" [disabled]="rowProductDraft.length <= 1" aria-label="حذف المنتج">حذف</button>
+              </div>
+              <div class="dashboard-edit-items__add">
+                <select [(ngModel)]="productToAdd">
+                  <option value="">اختر منتجاً لإضافته</option>
+                  <option *ngFor="let p of products" [value]="p.id">{{ p.nameAr || p.nameEn }}</option>
+                </select>
+                <button type="button" (click)="addDraftItem()" [disabled]="!productToAdd">إضافة</button>
+              </div>
+              <small class="dashboard-edit-items__hint">سعر المنتج الجديد يُحسب من سعر دولة الطلب عند الحفظ.</small>
+            </div>
           </div>
 
           <div *ngIf="rowActionDialog.kind === 'status'">
@@ -237,7 +259,7 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
                 <option value="out-for-delivery">{{ 'DASHBOARD.AUTO_STR_307' | translate }}</option>
                 <option value="delivered">{{ 'DASHBOARD.AUTO_STR_341' | translate }}</option>
                 <option value="postponed">{{ 'DASHBOARD.AUTO_STR_382' | translate }}</option>
-            <option value="cancelled">ملغي</option>
+                <option value="cancelled">ملغي</option>
               </select>
             </label>
           </div>
@@ -605,6 +627,120 @@ import { Product, TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '
       border: 1px solid #cbd5e1;
       border-radius: 8px;
     }
+    .dashboard-edit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .dashboard-edit-form .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .dashboard-edit-form label {
+      display: flex;
+      flex: 1 1 160px;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+      color: #475569;
+    }
+    .dashboard-edit-form label.full-width {
+      flex-basis: 100%;
+    }
+    .dashboard-edit-form input,
+    .dashboard-edit-form select,
+    .dashboard-edit-form textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #fff;
+      font: inherit;
+      color: #0c181b;
+    }
+    .dashboard-edit-form input[readonly] {
+      background: #f4f7f5;
+      color: #5d7075;
+    }
+    .dashboard-edit-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid #dee7e9;
+      border-radius: 10px;
+      background: #f4f7f5;
+    }
+    .dashboard-edit-items__title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2a5841;
+    }
+    .dashboard-edit-items__row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .dashboard-edit-items__row img {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    .dashboard-edit-items__name {
+      flex: 1;
+      font-size: 13px;
+      color: #0c181b;
+    }
+    .dashboard-edit-items__qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dashboard-edit-items__qty button,
+    .dashboard-edit-items__add button {
+      min-width: 30px;
+      height: 30px;
+      padding: 0 10px;
+      border: 1px solid #2a5841;
+      border-radius: 8px;
+      background: #fff;
+      color: #2a5841;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .dashboard-edit-items__add button {
+      background: #2a5841;
+      color: #fff;
+    }
+    .dashboard-edit-items button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .dashboard-edit-items__remove {
+      padding: 4px 10px;
+      border: 1px solid #f37561;
+      border-radius: 8px;
+      background: #fff;
+      color: #e05d47;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .dashboard-edit-items__add {
+      display: flex;
+      gap: 8px;
+    }
+    .dashboard-edit-items__add select {
+      flex: 1;
+    }
+    .dashboard-edit-items__hint {
+      font-size: 11px;
+      color: #5d7075;
+    }
   `]
 })
 export class DashboardModalsComponent {
@@ -617,6 +753,7 @@ export class DashboardModalsComponent {
   @Input() bulkStatusTarget: TrackedOrderStatus = 'confirmed';
   @Input() rowActionDialog: { orderId: string; kind: string } | null = null;
   @Input() rowEditDraft: any = {};
+  @Input() rowProductDraft: TrackedOrderItem[] = [];
   @Input() rowActionValue = '';
   @Input() selectedBankReceipt: { orderNumber: string; receipt: BankTransferReceipt } | null = null;
   @Input() products: Product[] = [];
@@ -643,6 +780,40 @@ export class DashboardModalsComponent {
 
   hasBankOrders(): boolean {
     return (this.orders || []).some(o => this.isBankOrder(o));
+  }
+
+  productToAdd = '';
+
+  changeDraftQuantity(index: number, delta: number): void {
+    const item = this.rowProductDraft[index];
+    if (!item) return;
+    item.quantity = Math.max(1, item.quantity + delta);
+  }
+
+  removeDraftItem(index: number): void {
+    if (this.rowProductDraft.length <= 1) return;
+    this.rowProductDraft.splice(index, 1);
+  }
+
+  /** Adding a product already on the order raises its quantity instead of repeating the line. */
+  addDraftItem(): void {
+    const product = this.products.find(p => p.id === this.productToAdd);
+    if (!product) return;
+    const existing = this.rowProductDraft.find(i => i.productId.toLowerCase() === product.id.toLowerCase());
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      this.rowProductDraft.push({
+        productId: product.id,
+        name: product.nameAr || product.nameEn,
+        image: product.images?.[0] || '/assets/home/product-1.png',
+        size: '',
+        color: '',
+        quantity: 1,
+        unitPrice: product.price,
+      });
+    }
+    this.productToAdd = '';
   }
 
   get filteredCatalogProducts(): Product[] {

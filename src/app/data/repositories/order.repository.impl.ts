@@ -25,6 +25,19 @@ const BACKEND_ORDER_STATUS: Record<TrackedOrderStatus, number> = {
 
 const BACKEND_PAYMENT_STATUS = { Pending: 0, Paid: 2 } as const;
 
+/** The dashboard's payment-method labels and the backend `PaymentMethod` values they stand for. */
+const BACKEND_PAYMENT_METHOD: Record<string, number> = {
+  'بطاقة مدى': 1,          // DebitCard
+  'تحويل بنكي': 2,         // BankTransfer
+  'الدفع عند الاستلام': 3, // CashOnDelivery
+};
+
+const PAYMENT_METHOD_LABELS: Record<string, string> = {
+  DebitCard: 'بطاقة مدى',
+  BankTransfer: 'تحويل بنكي',
+  CashOnDelivery: 'الدفع عند الاستلام',
+};
+
 function toFrontStatus(status: string): TrackedOrderStatus {
   switch (status) {
     case 'PendingApproval': return 'pending-approval';
@@ -79,8 +92,9 @@ export class OrderRepositoryImpl implements IOrderRepository {
               city: o.city || o.country || '',
               area: o.area || '',
               address: o.address || '',
-              paymentMethod: isBank ? 'تحويل بنكي' : 'الدفع عند الاستلام',
+              paymentMethod: PAYMENT_METHOD_LABELS[o.paymentMethod] || (isBank ? 'تحويل بنكي' : 'الدفع عند الاستلام'),
               country: o.country || '',
+              countryCode: o.countryCode || undefined,
               deliveryCompany: o.deliveryCompany || 'LAVVA Delivery',
               estimatedDelivery: o.estimatedDelivery || '',
               bankTransferReceipt: receiptUrl ? {
@@ -183,12 +197,19 @@ export class OrderRepositoryImpl implements IOrderRepository {
         requests.push(this.http.patch(`${environment.apiBaseUrl}/orders/${id}`, statusBody));
       }
 
-      if (updates.customerName !== undefined || updates.phone !== undefined || updates.address !== undefined) {
+      if (updates.customerName !== undefined || updates.phone !== undefined || updates.address !== undefined || updates.items) {
+        const paymentMethod = updates.paymentMethod ? BACKEND_PAYMENT_METHOD[updates.paymentMethod] : undefined;
         requests.push(this.http.put(`${environment.apiBaseUrl}/orders/${id}`, {
           customerName: updates.customerName ?? '',
           phone: updates.phone ?? '',
           address: updates.address ?? '',
-          shipmentCode: updates.shipmentCode ?? ''
+          shipmentCode: updates.shipmentCode ?? null,
+          city: updates.city ?? null,
+          area: updates.area ?? null,
+          deliveryCompany: updates.deliveryCompany ?? null,
+          notes: updates.notes ?? null,
+          paymentMethod: paymentMethod ?? null,
+          items: updates.items ? updates.items.map(i => ({ productId: i.productId, quantity: i.quantity })) : null
         }));
       }
 

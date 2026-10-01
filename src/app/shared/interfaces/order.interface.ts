@@ -68,6 +68,7 @@ export interface TrackedOrder {
   notes?: string;
   paymentMethod: string;
   country: string;
+  countryCode?: string;
   deliveryCompany: string;
   estimatedDelivery: string;
   gender?: TrackedOrderGender;

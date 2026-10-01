@@ -52,7 +52,7 @@ import { FilterSelectionKey, FilterShortcut, FilterOption, FilterSelections } fr
               (click)="filterSelect.emit({ key: filterKeyMap[item.key]!, value: option.value })"
             >
               <span class="dashboard-filter-dropdown__option-main">
-                <span *ngIf="item.key === 'country-filter'" class="dashboard-filter-dropdown__flag">🇸🇦</span>
+                <span *ngIf="item.key === 'country-filter'" class="dashboard-filter-dropdown__flag">{{ option.flag || '🌐' }}</span>
                 <span>{{ option.value }}</span>
               </span>
               <small class="dashboard-number">({{ option.count }})</small>

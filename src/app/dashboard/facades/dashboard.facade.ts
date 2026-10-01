@@ -24,6 +24,7 @@ import { Product, Category } from '../../domain/models/product.model';
 import { exportToCsv } from '../../shared/utils/csv-export.utils';
 import { formatWhatsAppPhone, buildWhatsAppUrl } from '../../shared/utils/phone.utils';
 import { getInitials } from '../../shared/utils/initials.utils';
+import { getCountryFlag } from '../../shared/utils/flag.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -168,7 +169,10 @@ export class DashboardFacade {
 
     return {
       status: buildOptions(orders.map(o => ORDER_STATUS_LABELS[o.status])),
-      country: buildOptions(orders.map(o => o.country)),
+      country: buildOptions(orders.map(o => o.country)).map(option => ({
+        ...option,
+        flag: getCountryFlag(orders.find(o => o.country === option.value)?.countryCode),
+      })),
       city: buildOptions(orders.map(o => o.city)),
       area: buildOptions(orders.map(o => o.area)),
       gender: buildOptions(orders.map(o => o.gender || 'نسائي')),
@@ -231,6 +235,10 @@ export class DashboardFacade {
     const updater = { name: this.activeAccount().name };
     this.orderRepo.updateOrder(id, { ...updates, statusUpdatedBy: updater }).subscribe(updated => {
       this.orders.update(list => list.map(o => (o.id === id ? { ...o, ...updates, updatedAt: new Date().toISOString() } : o)));
+      // The server prices edited lines itself, so the totals shown come back from it.
+      if (updates.items) {
+        this.orderRepo.getOrders().subscribe(orders => this.orders.set(orders));
+      }
     });
   }
 

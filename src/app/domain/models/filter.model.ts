@@ -13,6 +13,7 @@ export type FilterSelections = Partial<Record<FilterSelectionKey, string>>;
 export interface FilterOption {
   value: string;
   count: number;
+  flag?: string;
 }
 
 export interface FilterShortcut {

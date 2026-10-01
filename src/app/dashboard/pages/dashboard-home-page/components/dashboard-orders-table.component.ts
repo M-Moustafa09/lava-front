@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule, ChevronLeft, CheckCircle2, Edit3, CreditCard, PauseCircle, RefreshCcw, ShoppingBag } from 'lucide-angular';
 import { TrackedOrder, TrackedOrderStatus, BankTransferReceipt } from '../../../../shared/interfaces';
 import { ORDER_STATUS_LABELS, ORDER_STATUS_CLASSES } from '../../../../domain/enums/order-status.enum';
+import { getCountryFlag } from '../../../../shared/utils/flag.utils';
 import { buildWhatsAppUrl } from '../../../../shared/utils/phone.utils';
 
 @Component({
@@ -68,7 +69,7 @@ import { buildWhatsAppUrl } from '../../../../shared/utils/phone.utils';
 
                 <td>
                   <span class="dashboard-country">
-                    <span>🇸🇦</span>
+                    <span>{{ flagFor(order.countryCode) }}</span>
                     <span>{{ order.country }}</span>
                   </span>
                 </td>
@@ -260,6 +261,7 @@ export class DashboardOrdersTableComponent {
   readonly ShoppingBagIcon = ShoppingBag;
 
   readonly statusLabels = ORDER_STATUS_LABELS;
+  readonly flagFor = getCountryFlag;
   readonly statusClassMap = ORDER_STATUS_CLASSES;
 
   @Input() orders: TrackedOrder[] = [];

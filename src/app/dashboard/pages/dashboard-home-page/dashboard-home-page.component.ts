@@ -81,7 +81,7 @@ export class DashboardHomePageComponent implements OnInit, OnDestroy {
 
   readonly dashboardWeekOrder = DASHBOARD_WEEK_ORDER;
   readonly deliveryCompanies = ['سمسا', 'أرامكس', 'DHL', 'شركة كامكس للتوصيل', 'شركة أميال للتوصيل'];
-  readonly paymentMethods = ['الدفع عند الاستلام', 'تحويل بنكي', 'بطاقة مدى', 'تمارا', 'تابي'];
+  readonly paymentMethods = ['الدفع عند الاستلام', 'تحويل بنكي', 'بطاقة مدى'];
 
   readonly filterShortcuts: FilterShortcut[] = [
     { key: 'all-orders', label: 'كل الطلبات', icon: Database },
